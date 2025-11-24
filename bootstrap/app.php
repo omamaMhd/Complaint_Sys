@@ -16,7 +16,15 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->alias([
             'role' => App\Http\Middleware\EnsureUserRole::class,
         ]);
+
+        $middleware->api(append: [
+            \App\Http\Middleware\RequestTiming::class,
+        ]);  
         
+        // register alias so you can use 'request.timing' in routes
+        $middleware->alias([
+            'request.timing' => \App\Http\Middleware\RequestTiming::class,
+        ]);  
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
