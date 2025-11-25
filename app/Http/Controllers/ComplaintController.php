@@ -71,7 +71,7 @@ class ComplaintController extends Controller
     $request->validate([
         'file' => 'required|file|max:5120', // 5 MB
     ]);
-     $uploadedBy = auth('citizen')->id(); // أو auth('sanctum')->id() للموظف/أدمن
+     $uploadedBy = auth('sanctum')->id(); // أو auth('sanctum')->id() للموظف/أدمن
 
     if (!$uploadedBy) {
         return response()->json(['message' => 'Unauthenticated'], 401);

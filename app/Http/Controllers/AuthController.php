@@ -24,7 +24,6 @@ class AuthController extends Controller
         $citizen = $this->service->register($request->only(['username','mobile','password']));
         return response()->json([
             'citizenId' => $citizen->id,
-           // 'verification_token' => $citizen->verification_token,
             'message' => 'Account created. Verification code sent via WhatsApp.'
         ], 201);
     }
@@ -73,7 +72,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
 {
-    $res = $this->service->logout($request);
+    $citizen = $request->user('sanctum'); 
+    $res = $this->service->logout($citizen); 
 
     return response()->json([
         'message' => $res['message']
