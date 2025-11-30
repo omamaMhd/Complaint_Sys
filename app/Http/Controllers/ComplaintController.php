@@ -21,6 +21,7 @@ class ComplaintController extends Controller
         $validated = $request->validate([
             'type' => 'required|string|max:100',
             'location' => 'nullable|string|max:255',
+            'responsible_party'=>'nullable|string|max:255',
             'description' => 'required|string|min:5',
         ]);
 
@@ -29,7 +30,9 @@ class ComplaintController extends Controller
             'type' => $validated['type'],
             'location' => $validated['location'] ?? null,
             'description' => $validated['description'],
+            'responsible_party' => $validated['responsible_party'],
         ];
+        
 
         $complaint = $this->service->createComplaint($data);
 
@@ -69,13 +72,15 @@ class ComplaintController extends Controller
     public function addAttachment(Request $request, $id)
 {
     $request->validate([
-        'file' => 'required|file|max:5120', // 5 MB
+        'file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048', 
     ]);
-     $uploadedBy = auth('citizen')->id(); // أو auth('sanctum')->id() للموظف/أدمن
+     $uploadedBy = auth('sanctum')->id();
+     // auth('citizen')->id(); // أو auth('sanctum')->id() للموظف/أدمن
 
     if (!$uploadedBy) {
         return response()->json(['message' => 'Unauthenticated'], 401);
     }
+    
 
     $attachment = $this->service->addAttachment(
         $id,

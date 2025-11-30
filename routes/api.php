@@ -13,7 +13,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/resend', [AuthController::class, 'resendVerificationCode']);
 
 
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
      Route::post('/complaints', [ComplaintController::class, 'store']);
@@ -26,4 +26,4 @@ Route::post('/resend', [AuthController::class, 'resendVerificationCode']);
 
     Route::get('/complaints/{id}/history', [ComplaintController::class, 'history']);
 
-//});
+});

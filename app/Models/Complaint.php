@@ -10,7 +10,7 @@ class Complaint extends Model
 {
      protected $fillable = [
         'citizen_id','user_id','type','location','description',
-        'status','reference_number','locked_by','locked_until'
+        'status','reference_number','locked_by','locked_until', 'responsible_party'
     ];
 
     public function citizen(): BelongsTo

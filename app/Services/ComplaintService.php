@@ -50,7 +50,7 @@ class ComplaintService
 
     public function listUserComplaints(int $citizenId)
     {
-        return $this->repo->listByUser($citizenId);
+        return $this->repo->listByCitizen($citizenId);
     }
 
     public function lockForProcessing(int $complaintId, int $adminId, $ttl = 600): bool
@@ -129,23 +129,76 @@ class ComplaintService
     }
 
 
+// public function addAttachment(int $complaintId, $file, int $uploadedBy)
+//     {
+//         $path = $file->store('complaint_attachments','public');
+//         $attachment = $this->attachRepo->create([
+//             'complaint_id' => $complaintId,
+//             'path' => $path,
+//             'original_name' => $file->getClientOriginalName(),
+//             'uploaded_by' => $uploadedBy
+//         ]);
+//          // 1) منع المواطن من رفع مرفقات ليست لشكواه
+//     if (auth('sanctum')->id() && $attachment->citizen_id !== $uploadedBy) {
+//         throw new \Exception("ليس لديك صلاحية لرفع مرفقات لهذه الشكوى.");
+//     }
+
+//     // 2) منع رفع مرفقات بعد الإغلاق
+//     if ($attachment->status === 'completed' || $attachment->status === 'rejected') {
+//         throw new \Exception("لا يمكن رفع مرفقات على شكوى مغلقة.");
+//     }
+
+//     // 3) منع تجاوز حد المرفقات
+//     if ($attachment->attachments()->count() >= 5) {
+//         throw new \Exception("تم الوصول للحد الأقصى للمرفقات (5).");
+//     }
+
+   
+
+//         $this->historyRepo->create([
+//             'complaint_id' => $complaintId,
+//             'performed_by' => $uploadedBy,
+//             'action' => 'attachment_added',
+//             'data' => ['attachment_id' => $attachment->id, 'path' => $path]
+//         ]);
+
+//         return $attachment;
+//     }
+
 public function addAttachment(int $complaintId, $file, int $uploadedBy)
-    {
-        $path = $file->store('complaint_attachments','public');
-        $attachment = $this->attachRepo->create([
-            'complaint_id' => $complaintId,
-            'path' => $path,
-            'original_name' => $file->getClientOriginalName(),
-            'uploaded_by' => $uploadedBy
-        ]);
+{
+    $complaint = $this->repo->find($complaintId);
 
-        $this->historyRepo->create([
-            'complaint_id' => $complaintId,
-            'performed_by' => $uploadedBy,
-            'action' => 'attachment_added',
-            'data' => ['attachment_id' => $attachment->id, 'path' => $path]
-        ]);
-
-        return $attachment;
+    if (!$complaint) {
+        throw new \Exception("Complaint not found");
     }
+
+    // 1) منع المواطن من رفع مرفقات ليست لشكواه
+    if ($complaint->citizen_id != $uploadedBy) {
+        throw new \Exception("ليس لديك صلاحية لرفع مرفقات لهذه الشكوى.");
+    }
+
+    // 2) منع رفع مرفقات بعد الإغلاق
+    if (in_array($complaint->status, ['completed', 'rejected'])) {
+        throw new \Exception("لا يمكن رفع مرفقات على شكوى مغلقة.");
+    }
+
+    // 3) منع تجاوز حد المرفقات (مثلاً: 5)
+    if ($complaint->attachments()->count() >= 5) {
+        throw new \Exception("تم الوصول للحد الأقصى للمرفقات (5).");
+    }
+
+    // 4) رفع الملف
+    $path = $file->store('complaint_attachments', 'public');
+
+    $attachment = $this->attachRepo->create([
+        'complaint_id' => $complaintId,
+        'path' => $path,
+        'original_name' => $file->getClientOriginalName(),
+        'uploaded_by' => $uploadedBy
+    ]);
+
+    return $attachment;
+}
+
 }

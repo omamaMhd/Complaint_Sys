@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('type');
             $table->string('location')->nullable();
+             $table->string('responsible_party')->nullable();
             $table->text('description');
 
             $table->string('status')->default('new'); // new, in_progress, completed, rejected
