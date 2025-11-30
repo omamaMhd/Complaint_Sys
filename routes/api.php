@@ -15,7 +15,7 @@ Route::post('/resend', [AuthController::class, 'resendVerificationCode']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout', [AuthController::class, 'logout']);
      Route::post('/complaints', [ComplaintController::class, 'store']);
     Route::get('/complaints/my', [ComplaintController::class, 'myComplaints']);
 

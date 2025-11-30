@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 
 use Exception;
@@ -99,9 +100,8 @@ class CitizenService
             'token' => $token
         ];
     }
-    public function logout(Request $request)
+    public function logout($citizen)
     {
-         $citizen = $request->user('sanctum');
 
           if (!$citizen) {
               return [

@@ -27,7 +27,7 @@ class SendWhatsAppJob implements ShouldQueue
     public function handle(): void
     {
         $client = new Client(['timeout' => 10]);
-        $endpoint = env('ULTRAMSG_ENDPOINT', 'https://api.ultramsg.com/instance116019/messages/chat');
+        $endpoint = env('ULTRAMSG_ENDPOINT', 'https://api.ultramsg.com/instance152385/messages/chat');
         $payload = [
             'token' => env('ULTRAMSG_API_TOKEN'),
             'to' => $this->citizen->mobile,
