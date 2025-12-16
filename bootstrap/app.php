@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
          $middleware->alias([
             'role' => App\Http\Middleware\EnsureUserRole::class,
+            'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+    'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         ]);
 
         $middleware->api(append: [

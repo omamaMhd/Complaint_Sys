@@ -18,10 +18,22 @@ return new class extends Migration
 
             $table->string('type');
             $table->string('location')->nullable();
-             $table->string('responsible_party')->nullable();
+             //$table->string('responsible_party')->nullable();
+             $table->enum('responsible_party', [
+    'وزارة الداخلية',
+    'وزارة الصحة',
+    'وزارة التربية والتعليم',
+    'وزارة النقل',
+    'وزارة المالية',
+    'البلدية',
+    'هيئة المياه',
+    'هيئة الكهرباء',
+    'شرطة المرور'
+             ])->nullable();
             $table->text('description');
 
-            $table->string('status')->default('new'); // new, in_progress, completed, rejected
+           $table->enum('status', ['new', 'in_progress', 'completed', 'rejected'])->default('new');
+
             $table->string('reference_number')->unique();
 
             // Concurrency lock

@@ -72,7 +72,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
 {
-    $citizen = $request->user('sanctum'); 
+    $citizen = $request->user(); 
     $res = $this->service->logout($citizen); 
 
     return response()->json([

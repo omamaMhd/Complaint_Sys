@@ -3,7 +3,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\Contracts\CitizenRepositoryInterface;
 use App\Models\Citizen;
-
+use App\Models\User;
 class CitizenRepository implements CitizenRepositoryInterface
 {
     public function create(array $data)
@@ -14,6 +14,10 @@ class CitizenRepository implements CitizenRepositoryInterface
     public function findByMobile(string $mobile)
     {
         return Citizen::where('mobile', $mobile)->first();
+    }
+ public function findByMobile1(string $mobile)
+    {
+        return User::where('mobile', $mobile)->first();
     }
 
 

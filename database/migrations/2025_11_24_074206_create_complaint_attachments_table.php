@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('complaint_attachments', function (Blueprint $table) {
             $table->id();
+            // $table->unsignedBigInteger('complaint_id');
               $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
             $table->string('path');
             $table->string('original_name');

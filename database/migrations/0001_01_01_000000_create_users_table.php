@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->string('mobile')->unique();
             $table->string('password');
-            $table->enum('role', ['admin','staff'])->nullable();
+            $table->enum('role', ['admin','employee'])->nullable();
+            $table->string('responsible_party')->nullable();
             $table->string('fcm_token')->nullable();
             $table->timestamps();
             $table->rememberToken();

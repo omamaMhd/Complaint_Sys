@@ -7,16 +7,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*
 
-Route::middleware(['auth:web', 'role:officer'])->group(function () {
-    Route::get('/officer/dashboard', [OfficerController::class, 'index']);
+Route::post('/login', [AdminController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+ Route::post('/logout', [AdminController::class, 'logout']);
+    
+    //Route::get('/complaints/my', [ComplaintController::class, 'myComplaints']);
+     Route::get('/departmentComplaints', [ComplaintController::class, 'departmentComplaints']) ->middleware('auth:employee');
+    // Route::patch('/complaints/{id}/status', [ComplaintController::class, 'changeStatus'])
+    //     ->middleware('auth:admin');
+    // Route::get('/complaints/{id}/history', [ComplaintController::class, 'history']);
+
 });
-
-Route::middleware(['auth:web', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index']);
-});
-
-
-*/
  

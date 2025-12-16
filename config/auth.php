@@ -41,10 +41,14 @@ return [
             'provider' => 'users',
         ],
 
-        'sanctum' => [
-            'driver' => 'sanctum',
-            'provider' => 'citizens',
-    ],
+    //     'sanctum' => [
+    //         'driver' => 'sanctum',
+    //         'provider' => 'citizens',
+    // ],
+    //  'admin' => [ // ✅ للأدمن
+    //     'driver' => 'sanctum',
+    //     'provider' => 'users',
+    // ],
        /* 'citizen' => [
         'driver' => 'sanctum', 
         'provider' => 'citizens',
