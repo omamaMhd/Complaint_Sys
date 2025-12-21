@@ -24,16 +24,29 @@ class RolesAndPermissions extends Seeder
         // =========================
         $permissions = [
             // Complaints
-            'view_all_complaints',
-            'view_department_complaints',
-            'change_complaint_status',
-            'add_complaint_note',
+            'Department_Complaints',
+            'Change_Status',
+            'Add_Note',
+
+ /*           'view_all_complaints',
             'request_more_info',
+            'list_user_complaints',
+
 
             // Users (admin)
             'create_employee',
-            'update_employee',
             'delete_employee',
+            'employee.view_all',              // عرض جميع الموظفين
+          //  'permission.manage',              // إدارة الصلاحيات
+            
+            // صلاحيات التقارير
+            'report.generate',                // إنشاء تقارير
+            'report.export',                  // تصدير التقارير
+            
+            // صلاحيات النظام
+            'system.monitor',                 // مراقبة النظام
+            'backup.manage',                  // إدارة النسخ الاحتياطي
+*/
         ];
 
         foreach ($permissions as $perm) {
@@ -50,22 +63,16 @@ class RolesAndPermissions extends Seeder
         // 3️⃣ ربط الصلاحيات بالأدوار
         // =========================
 
-        // Admin → كل الصلاحيات
+        // Admin → منح كل الصلاحيات
         $adminRole->syncPermissions(Permission::all());
 
         // Employee → صلاحيات محددة
+        // فارغ افتراضيا
         $employeeRole->syncPermissions([
-            'view_department_complaints',
-            'change_complaint_status',
-            'add_complaint_note',
-            'request_more_info',
+        //   'view_department_complaints', 'change_complaint_status',
+        //   'add_complaint_note', 'request_more_info',
+        //   'list_user_complaints',
         ]);
-        // User::where('responsible_party', null)->each(function ($user) use ($adminRole) {
-        //     $user->assignRole($adminRole);
-        // });
 
-        // User::whereNotNull('responsible_party')->each(function ($user) use ($employeeRole) {
-        //     $user->assignRole($employeeRole);
-        // });
     }
 }

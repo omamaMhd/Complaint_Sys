@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('complaint_histories', function (Blueprint $table) {
             $table->id();
-                $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
+            $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
 
             // يمكن أن يكون مواطن أو موظف أو نظام، لذلك nullable
             $table->unsignedBigInteger('performed_by')->nullable();

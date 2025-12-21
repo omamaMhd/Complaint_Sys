@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Contracts\CitizenRepositoryInterface;
+use App\Repositories\Eloquent\CitizenRepository;
+use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Repositories\Eloquent\EmployeeRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,14 +16,19 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
       $this->app->bind(
-          \App\Repositories\Contracts\CitizenRepositoryInterface::class,
-          \App\Repositories\Eloquent\CitizenRepository::class
+          CitizenRepositoryInterface::class,
+          CitizenRepository::class
       );
 
       // bind service too (optional, auto resolves)
       $this->app->singleton(\App\Services\CitizenService::class, function($app) {
           return new \App\Services\CitizenService($app->make(\App\Repositories\Contracts\CitizenRepositoryInterface::class));
       });  
+       $this->app->bind(
+        EmployeeRepositoryInterface::class,
+        EmployeeRepository::class
+    );
+
     }
 
     /**

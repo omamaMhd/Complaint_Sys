@@ -18,7 +18,7 @@ class ComplaintService
     protected $repo;
     protected $historyRepo;
     protected $attachRepo;
-protected  $maxAttachments = 5;
+    protected  $maxAttachments = 5;
     public function __construct(
         ComplaintRepository $repo,
         ComplaintHistoryRepository $historyRepo,
@@ -27,26 +27,11 @@ protected  $maxAttachments = 5;
         $this->repo = $repo;
         $this->historyRepo = $historyRepo;
         $this->attachRepo = $attachRepo;
+
+     
+
     }
 
-    // public function createComplaint(array $data)
-    // {
-    //     return DB::transaction(function() use ($data) {
-    //         $data['reference_number'] = 'CMP-' . Str::uuid();
-    //         $complaint = $this->repo->create($data);
-
-    //         $this->historyRepo->create([
-    //             'complaint_id' => $complaint->id,
-    //             'performed_by' => $data['user_id'] ?? null,
-    //             'action' => 'created',
-    //             'data' => ['initial' => $complaint->toArray()]
-    //         ]);
-
-    //         Log::info("Complaint created: id={$complaint->id}, ref={$complaint->reference_number}");
-
-    //         return $complaint;
-    //     });
-    // }
       public function createComplaint(array $data, array $files, int $citizenId)
     {
         $stored = [];
@@ -102,6 +87,10 @@ protected  $maxAttachments = 5;
                 }
 
                 Log::info("Complaint created with {$complaint->attachments()->count()} attachments");
+
+                 // بعد إنشاء الشكوى
+                $notificationService = app(\App\Services\NotificationService::class);
+                $notificationService->sendComplaintCreatedNotification($complaint); 
 
                 return $complaint;
             });
@@ -173,7 +162,14 @@ protected  $maxAttachments = 5;
             $complaint = $this->repo->find($complaintId);
             $old = $complaint->status;
 
-            $this->repo->update($complaint, $newStatus);
+        // منع الوصول لشكوى جهة أخرى
+        if ($complaint->responsible_party !== $department) {
+            throw new \Exception("Unauthorized");
+        }
+
+        // ✅ التحقق أولاً ثم إرسال الإشعار
+        $this->repo->update($complaint, $newStatus);
+
             // ['status' => $newStatus]);
 
             $this->historyRepo->create([
@@ -182,18 +178,13 @@ protected  $maxAttachments = 5;
                 'action' => 'status_changed',
                 'data' => ['old' => $old, 'new' => $newStatus]
             ]);
-             // منع الوصول لشكوى جهة أخرى
-        if ($complaint->responsible_party !== $department) {
-            throw new \Exception("Unauthorized");
-        }
+
+        // ✅ هنا أرسل الإشعار - بعد التأكد من التغيير
+        $notificationService = app(\App\Services\NotificationService::class);
+        $notificationService->sendStatusChangeNotification($complaint, $old, $newStatus);
+        
 
             Log::info("Complaint status changed id={$complaintId} from={$old} to={$newStatus} by={$byUser}");
-
-            // $owner = $complaint->citizen;
-            // if ($owner) {
-            //     Notification::route('mail', $owner->email)
-            //         ->notify(new ComplaintStatusChanged($complaint, $old, $newStatus));
-            // }
 
             return $this->repo->find($complaintId);
         });
@@ -205,41 +196,8 @@ protected  $maxAttachments = 5;
     }
 
 
-// public function addAttachment(int $complaintId, $file, int $uploadedBy)
-//     {
-//         $path = $file->store('complaint_attachments','public');
-//         $attachment = $this->attachRepo->create([
-//             'complaint_id' => $complaintId,
-//             'path' => $path,
-//             'original_name' => $file->getClientOriginalName(),
-//             'uploaded_by' => $uploadedBy
-//         ]);
-//          // 1) منع المواطن من رفع مرفقات ليست لشكواه
-//     if (auth('sanctum')->id() && $attachment->citizen_id !== $uploadedBy) {
-//         throw new \Exception("ليس لديك صلاحية لرفع مرفقات لهذه الشكوى.");
-//     }
 
-//     // 2) منع رفع مرفقات بعد الإغلاق
-//     if ($attachment->status === 'completed' || $attachment->status === 'rejected') {
-//         throw new \Exception("لا يمكن رفع مرفقات على شكوى مغلقة.");
-//     }
 
-//     // 3) منع تجاوز حد المرفقات
-//     if ($attachment->attachments()->count() >= 5) {
-//         throw new \Exception("تم الوصول للحد الأقصى للمرفقات (5).");
-//     }
-
-   
-
-//         $this->historyRepo->create([
-//             'complaint_id' => $complaintId,
-//             'performed_by' => $uploadedBy,
-//             'action' => 'attachment_added',
-//             'data' => ['attachment_id' => $attachment->id, 'path' => $path]
-//         ]);
-
-//         return $attachment;
-//     }
 
 public function addAttachment(int $complaintId, $file, int $uploadedBy)
 {
@@ -286,37 +244,6 @@ public function getDepartmentComplaints(string $department)
     return $this->repo->listForDepartment($department);
 }
 
-//  public function changeStatus(int $id, string $status, string $employeeDepartment, int $employeeId)
-//     {
-//         $complaint = $this->complaints->find($id);
-
-//         if (!$complaint) {
-//             throw new \Exception("Complaint not found");
-//         }
-
-//         // 🔹 التحكم بالوصول
-//         if ($complaint->responsible_party !== $employeeDepartment) {
-//             throw new \Exception("Unauthorized");
-//         }
-
-//         $old = $complaint->status;
-
-//         // 🔹 تحديث الحالة
-//         $updated = $this->complaints->updateStatus($complaint, $status);
-
-//         // 🔹 حفظ في السجل
-//         $this->history->create([
-//             'complaint_id' => $id,
-//             'performed_by' => $employeeId,
-//             'action' => 'status_changed',
-//             'data' => [
-//                 'old' => $old,
-//                 'new' => $status
-//             ]
-//         ]);
-
-//         return $updated;
-//     }
 
 // 🔹 إضافة ملاحظة
     public function addNote(int $id, string $note, string $department, int $employeeId)
@@ -328,39 +255,24 @@ public function getDepartmentComplaints(string $department)
         }
 
         // منع الوصول لشكوى جهة أخرى
-        if ($complaint->responsible_party !== $department) {
+     /*   if ($complaint->responsible_party !== $department) {
             throw new \Exception("Unauthorized");
-        }
+        }*/
 
         // حفظ الملاحظة في history
-        return $this->historyRepo->create([
+        $noteRecord = $this->historyRepo->create([
             'complaint_id' => $id,
             'performed_by' => $employeeId,
             'action' => 'note_added',
             'data' => ['note' => $note]
         ]);
+
+        // 3. ✅ إرسال إشعار للمواطن
+        $notificationService = app(\App\Services\NotificationService::class);
+        $notificationService->sendNoteAddedNotification($complaint, $note);
+
+        return $noteRecord;
     }
 
-    // 🔹 طلب معلومات إضافية من المواطن
-    // public function requestInfo(int $id, string $message, string $department, int $employeeId)
-    // {
-    //     $complaint = $this->repo->find($id);
-
-    //     if (!$complaint) {
-    //         throw new \Exception("Complaint not found");
-    //     }
-
-    //     if ($complaint->responsible_party !== $department) {
-    //         throw new \Exception("Unauthorized");
-    //     }
-
-    //     // حفظ الطلب في history
-    //     return $this->historyRepo->create([
-    //         'complaint_id' => $id,
-    //         'performed_by' => $employeeId,
-    //         'action' => 'info_requested',
-    //         'data' => ['message' => $message]
-    //     ]);
-    // }
 
 }

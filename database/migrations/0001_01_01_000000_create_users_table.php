@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->string('mobile')->unique();
             $table->string('password');
-            $table->enum('role', ['admin','employee'])->nullable();
+         //   $table->enum('role', ['admin','employee'])->nullable();
             $table->string('responsible_party')->nullable();
             $table->string('fcm_token')->nullable();
+            $table->boolean('must_change_password')->nullable()->default(true);
             $table->timestamps();
             $table->rememberToken();
             $table->softDeletes();

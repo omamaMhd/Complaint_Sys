@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ComplaintService;
 use App\Repositories\ComplaintRepository;
 use App\Models\Complaint;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintController extends Controller
 {
@@ -13,9 +14,16 @@ class ComplaintController extends Controller
 
     public function __construct(ComplaintService $service)
     {
-       // $this->middleware('auth:sanctum');
         $this->service = $service;
-    }
+
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+            if (!$user->hasRole('admin') && !$user->hasRole('employee')) {
+           return response()->json(['message' => 'Unauthorized. Admin or Employee access only.'], 403);}        
+
+           return $next($request);
+        }) ->except(['store', 'track', 'myComplaints','addAttachment']);}
+
 //تقديم شكوى 
     public function store(Request $request)
     {
@@ -26,16 +34,9 @@ class ComplaintController extends Controller
             'description' => 'required|string|min:5',
              'attachments' => 'nullable|array|max:5',
              'attachments.*' => 'file|mimes:jpeg,png,jpg,pdf|max:5120'
-            //'file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048', 
         ]);
 
-        // $data = [
-        //     'citizen_id' => auth()->id(), // ✅ الجهة المقدمة للشكوى
-        //     'type' => $validated['type'],
-        //     'location' => $validated['location'] ?? null,
-        //     'description' => $validated['description'],
-        //     'responsible_party' => $validated['responsible_party'],
-        // ];
+
          $citizenId = auth()->id();
 
         $complaint = $this->service->createComplaint(
@@ -44,8 +45,6 @@ class ComplaintController extends Controller
             $citizenId
         );
         
-
-      //  $complaint = $this->service->createComplaint($data);
 
         return response()->json([
             'message' => 'Complaint created successfully',
@@ -62,7 +61,7 @@ class ComplaintController extends Controller
 }
 
 
-    public function changeStatus(Request $request, $id)
+    public function Change_Status(Request $request, $id)
     {
         $request->validate(['status' => 'required|in:new,in_progress,completed,rejected']);
 
@@ -104,27 +103,7 @@ class ComplaintController extends Controller
         'attachment' => $attachment
     ], 201);
 }
-//متابعة حالة الشكوى حسب الرقم المرجعي للشكوى
-// public function track($reference)
-// {
-//     $complaint = Complaint::where('reference_number', $reference)
-//         ->select('id', 'type', 'location', 'status', 'created_at')
-//         ->first();
 
-//     if (!$complaint) {
-//         return response()->json([
-//             'message' => 'Complaint not found'
-//         ], 404);
-//     }
-
-//     return response()->json([
-//         'reference' => $reference,
-//         'status' => $complaint->status,
-//         'type' => $complaint->type,
-//         'location' => $complaint->location,
-//         'submitted_at' => $complaint->created_at->toDateTimeString()
-//     ]);
-// }
 public function track($reference)
 {
     $complaint = $this->service->trackComplaint($reference);
@@ -133,23 +112,11 @@ public function track($reference)
         return response()->json(['message' => 'Complaint not found'], 404);
     }
  return response()->json([$complaint
-    // return response()->json([
-    //     'reference' => $reference,
-    //     'status' => $complaint->status,
-    //     'type' => $complaint->type,
-    //     'location' => $complaint->location,
-    //     'submitted_at' => $complaint->created_at->toDateTimeString(),
-        // 'attachments' => $complaint->attachments->map(function ($a) {
-        //     return [
-        //         'id' => $a->id,
-        //         'name' => $a->original_name,
-        //         'url' => asset('storage/' . $a->path)
-        //     ];
-        // })
+
     ]);
 }
 //عرض كل شكاوي جهة معينة
-public function departmentComplaints()
+public function Department_Complaints()
 {
     $department = auth()->user()->responsible_party;
 
@@ -159,7 +126,7 @@ public function departmentComplaints()
 
 }
 // اضافة ملاحظة على الشكوى وطلب معلومات اضافية من المواطن
-public function addNote(Request $request, $id)
+public function Add_Note(Request $request, $id)
 {
     $request->validate([
         'note' => 'required|string|min:3'
@@ -185,31 +152,7 @@ public function addNote(Request $request, $id)
     }
 }
 
-// public function requestInfo(Request $request, $id)
-// {
-//     $request->validate([
-//         'message' => 'required|string|min:3'
-//     ]);
-
-//     try {
-//         $info = $this->service->requestInfo(
-//             $id,
-//             $request->message,
-//             auth()->user()->responsible_party,
-//             auth()->id()
-//         );
-
-//         return response()->json([
-//             'message' => 'Information request sent successfully',
-//             'info' => $info
-//         ]);
-
-//     } catch (\Exception $e) {
-//         return response()->json([
-//             'message' => $e->getMessage()
-//         ], $e->getMessage() === "Unauthorized" ? 403 : 404);
-//     }
-// }
-
-
 }
+
+
+

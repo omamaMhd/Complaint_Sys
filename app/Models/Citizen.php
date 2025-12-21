@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log; 
 
 class Citizen extends Authenticatable
 { 
@@ -29,6 +30,25 @@ class Citizen extends Authenticatable
     }
 
     protected $hidden = ['password'];
+
+     /**
+     * علاقة Notifications (بدون منطق إرسال)
+     */
+    public function notifications()
+    {
+        return $this->morphMany(\Illuminate\Notifications\DatabaseNotification::class, 'notifiable')
+                    ->orderBy('created_at', 'desc');
+    }
+        /**
+     * تحديث توكن FCM
+     */
+    public function updateFcmToken($token)
+    {
+        $this->fcm_token = $token;
+        $this->save();
+        
+        Log::info("FCM token updated for citizen {$this->id}");
+    }
 
 
 }

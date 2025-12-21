@@ -9,7 +9,7 @@ class CitizenLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|max:10',
+            'mobile' => 'required',
             'password' => 'required|min:8',
         ];
     }

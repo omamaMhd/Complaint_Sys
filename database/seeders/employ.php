@@ -48,20 +48,21 @@ class employ extends Seeder
         ];
 
         $baseNumber = '0999';
-        $plainPassword = 'password123';
         $counter = 1;
 
+        $plainPassword2 = 'Temp1234';
         foreach ($departments as $dept) {
             for ($i = 1; $i <= 3; $i++) {
 
-                $employee = User::firstOrCreate(
-                    ['mobile' => $baseNumber . str_pad($counter, 6, '0', STR_PAD_LEFT)],
-                    [
-                        'username' => "موظف $i - $dept",
-                        'password' => Hash::make($plainPassword),
-                        'responsible_party' => $dept
-                    ]
-                );
+            $employee = User::firstOrCreate(
+              ['mobile' => $baseNumber . str_pad($counter, 6, '0', STR_PAD_LEFT)],
+              [
+                'username' => "موظف $i - $dept",
+                'password' => Hash::make($plainPassword2),
+                'responsible_party' => $dept,
+                'must_change_password' => true,
+              ]
+);
 
                 $employee->assignRole($employeeRole);
                 $counter++;
@@ -69,56 +70,3 @@ class employ extends Seeder
         }
     }
 }
-
-// namespace Database\Seeders;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-// use Illuminate\Database\Seeder;
-// use App\Models\User;
-// use Illuminate\Support\Facades\Hash;
-// class employ extends Seeder
-// {
-//     /**
-//      * Run the database seeds.
-//      */
-//     public function run(): void
-//     {
-//           $departments = [
-//             'وزارة الداخلية',
-//     'وزارة الصحة',
-//     'وزارة التربية والتعليم',
-//     'وزارة النقل',
-//     'وزارة المالية',
-//     'البلدية',
-//     'هيئة المياه',
-//     'هيئة الكهرباء',
-//     'شرطة المرور'
-//         ];
-//  $baseNumber = '0999';
-//  $plainPassword = 'password123';
-//  $counter = 1;
-//         foreach ($departments as $dept) {
-
-//             // إنشاء 3 موظفين لكل جهة
-//             for ($i = 1; $i <= 3; $i++) {
-//                 User::create([
-//                     'username' => "موظف $i - $dept",
-//                     'mobile' => $baseNumber . str_pad($counter, 6, '0', STR_PAD_LEFT),
-//                     'password' => Hash::make($plainPassword),
-//                     'role' => 'employee',
-//                     'responsible_party' => $dept
-//                 ]);
-//                 $counter++;
-//             }
-//         }
-
-//         // إنشاء مدير النظام
-//         User::create([
-//             'username' => 'System Admin',
-//             'mobile' => '0987654321',
-//             'password' => Hash::make('admin123'),
-//             'role' => 'admin',
-//             'responsible_party' => null,
-//         ]);
-//     }
-// }
