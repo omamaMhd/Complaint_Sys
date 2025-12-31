@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\Notifications\ComplaintStatusChanged;
 use Illuminate\Support\Facades\Notification;
+//use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+
 
 class ComplaintService
 {
@@ -156,21 +160,40 @@ class ComplaintService
         return true;
     }
 
-    public function changeStatus(int $complaintId, string $newStatus, string $department, int $byUser)
+    public function changeStatus(int $complaintId, string $newStatus, int $byUser)
     {
-        return DB::transaction(function() use ($complaintId, $newStatus, $department, $byUser) {
-            $complaint = $this->repo->find($complaintId);
-            $old = $complaint->status;
+        return DB::transaction(function() use ($complaintId, $newStatus, $byUser) {
 
-        // منع الوصول لشكوى جهة أخرى
-        if ($complaint->responsible_party !== $department) {
-            throw new \Exception("Unauthorized");
-        }
+        $user = auth()->user();
+        // 🔐 تأكد أن التوكن لمستخدم (admin أو employee)
+        if (!$user || !$user->hasAnyRole(['admin', 'employee'])) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Unauthorized token'
+                ], 401)
+            );  }
+
+            $complaint = $this->repo->find($complaintId);
+
+            if (!$complaint) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Complaint not found'
+                ], 404)
+            );   }
+        $old = $complaint->status;
+          // 🔐 Authorization
+        if ($user->hasRole('employee')) {
+            if ($complaint->responsible_party !== $user->responsible_party) {
+            throw new HttpResponseException(
+            response()->json([
+            'message' => 'You are not allowed to change this complaint'
+            ], 403)
+        );
+            }}
 
         // ✅ التحقق أولاً ثم إرسال الإشعار
         $this->repo->update($complaint, $newStatus);
-
-            // ['status' => $newStatus]);
 
             $this->historyRepo->create([
                 'complaint_id' => $complaintId,
@@ -182,7 +205,6 @@ class ComplaintService
         // ✅ هنا أرسل الإشعار - بعد التأكد من التغيير
         $notificationService = app(\App\Services\NotificationService::class);
         $notificationService->sendStatusChangeNotification($complaint, $old, $newStatus);
-        
 
             Log::info("Complaint status changed id={$complaintId} from={$old} to={$newStatus} by={$byUser}");
 
@@ -246,23 +268,38 @@ public function getDepartmentComplaints(string $department)
 
 
 // 🔹 إضافة ملاحظة
-    public function addNote(int $id, string $note, string $department, int $employeeId)
+    public function addNote(int $id, string $note)
     {
+        $user = auth()->user();
+        // 🔐 التحقق من التوكن (admin أو employee فقط)
+        if (!$user || !$user->hasAnyRole(['admin', 'employee'])) {
+            throw new HttpResponseException(
+               response()->json([
+                     'message' => 'Unauthorized token'
+               ], 401)
+         );   }
         $complaint = $this->repo->find($id);
 
         if (!$complaint) {
-            throw new \Exception("Complaint not found");
-        }
-
-        // منع الوصول لشكوى جهة أخرى
-     /*   if ($complaint->responsible_party !== $department) {
-            throw new \Exception("Unauthorized");
-        }*/
-
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Complaint not found'
+            ], 404)
+        );
+    }
+    // 🔒 في حال موظف → لازم نفس الجهة
+    if ($user->hasRole('employee')) {
+        if ($complaint->responsible_party !== $user->responsible_party) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'You are not allowed to add a note to this complaint'
+                ], 403)
+            );
+        } }    
         // حفظ الملاحظة في history
         $noteRecord = $this->historyRepo->create([
             'complaint_id' => $id,
-            'performed_by' => $employeeId,
+            'performed_by' => auth()->id(),
             'action' => 'note_added',
             'data' => ['note' => $note]
         ]);

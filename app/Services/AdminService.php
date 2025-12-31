@@ -62,6 +62,12 @@ class AdminService
      */
     public function createEmployee(array $data, array $permissions = [])
     {
+       $user = auth()->user();
+       if (!$user || !$user->hasRole('admin')) {
+            throw new HttpResponseException(
+                response()->json(['message' => 'Unauthorized token'], 403)
+            );
+        }
         // التحقق أن الصلاحيات غير فارغة
         if (empty($permissions)) {
             throw new \Exception('Permissions array cannot be empty');
@@ -98,6 +104,12 @@ class AdminService
      */
     public function updateEmployeePermissions(User $employee, array $permissions): void
     {
+       $user = auth()->user();
+       if (!$user || !$user->hasRole('admin')) {
+            throw new HttpResponseException(
+                response()->json(['message' => 'Unauthorized token'], 403)
+            );
+        }
         // التحقق أن الصلاحيات غير فارغة
         if (empty($permissions)) {
             throw new \Exception('Permissions array cannot be empty');
@@ -122,38 +134,52 @@ class AdminService
      */
     public function listAllComplaints()
     {
+        $user = auth()->user();
+       if (!$user || !$user->hasRole('admin')) {
+            throw new HttpResponseException(
+                response()->json(['message' => 'Unauthorized token'], 403)
+            );
+        }
         $complaints = $this->repo->getAllComplaints();
         return ['ok' => true, 'data' => $complaints];
     }
 
- /**
-     * تابع جديد: عرض معلومات المواطن والموظف للشكوى
-     */
-    public function showComplaint($complaintId)
-    {
-            $complaint = $this->repo->getComplaintDetails($complaintId);
-      
-            // تنسيق البيانات
-            $formattedData = [
-                'complaint_id' => $complaint->id,
-                'citizen' => $complaint->citizen ? [
-                    'id' => $complaint->citizen->id,
-                    'username' => $complaint->citizen->username,
-                    'mobile' => $complaint->citizen->mobile
-                ] : null,
-                
-                'handler' => $complaint->handler ? [
-                    'id' => $complaint->handler->id,
-                    'username' => $complaint->handler->username,
-                    'mobile' => $complaint->handler->mobile,
-                    'responsible_party' => $complaint->handler->responsible_party
-                ] : null,      
-                
-                'locked_by_user' => $complaint->lockedBy ? [
-                    'id' => $complaint->lockedBy->id,
-                    'username' => $complaint->lockedBy->username
-                ] : null
+public function showComplaint(int $complaintId)
+{
+    $complaint = $this->repo->getComplaintDetails($complaintId);
+
+    $complaint->histories = $complaint->histories->map(function($h) {
+        $history = [
+            'id' => $h->id,
+            'complaint_id' => $h->complaint_id,
+            'action' => $h->action,
+            'data' => $h->data,
+            'created_at' => $h->created_at,
+            'updated_at' => $h->updated_at,
+        ];
+        // ⭐⭐ التعديل هنا: فقط لـ status_changed و note_added ⭐⭐
+        if (in_array($h->action, ['status_changed', 'note_added']) && $h->performedBy) {
+            $history['performed_by'] = [
+                'id' => $h->performedBy->id,
+                'username' => $h->performedBy->username
             ];
-            return $formattedData;
         }
+        // ⭐ لا نضيف performed_by للحالات الأخرى ⭐
+        return $history;
+    });
+    // تنظيف المرفقات
+    $complaint->attachments = $complaint->attachments->map(function($att) {
+        return [
+            'id' => $att->id,
+            'complaint_id' => $att->complaint_id,
+            'path' => $att->path,
+            'original_name' => $att->original_name,
+            'created_at' => $att->created_at,
+            'updated_at' => $att->updated_at,
+        ];
+    });
+
+    return $complaint;
+}
+
 }

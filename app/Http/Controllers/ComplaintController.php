@@ -65,7 +65,7 @@ class ComplaintController extends Controller
     {
         $request->validate(['status' => 'required|in:new,in_progress,completed,rejected']);
 
-        $complaint = $this->service->changeStatus($id, $request->status, auth()->user()->responsible_party, auth()->id());
+        $complaint = $this->service->changeStatus($id, $request->status, auth()->id());
 
         return response()->json([
             'message' => 'Status updated',
@@ -136,8 +136,6 @@ public function Add_Note(Request $request, $id)
         $note = $this->service->addNote(
             $id,
             $request->note,
-            auth()->user()->responsible_party,
-            auth()->id()
         );
 
         return response()->json([
@@ -148,7 +146,7 @@ public function Add_Note(Request $request, $id)
     } catch (\Exception $e) {
         return response()->json([
             'message' => $e->getMessage()
-        ], $e->getMessage() === "Unauthorized" ? 403 : 404);
+        ], $e instanceof \Illuminate\Http\Exceptions\HttpResponseException ? $e->getResponse()->status() : 500);
     }
 }
 
