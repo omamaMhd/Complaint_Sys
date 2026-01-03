@@ -22,6 +22,11 @@ return new class extends Migration
         $table->string('fcm_token')->nullable();
         $table->timestamps();
         $table->softDeletes();
+
+
+        $table->unsignedTinyInteger('failed_login_attempts')->default(0);
+        $table->timestamp('locked_until')->nullable();
+        $table->timestamp('last_failed_login_at')->nullable();
         });
     }
 

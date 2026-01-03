@@ -7,4 +7,5 @@ interface CitizenRepositoryInterface
     public function findByMobile(string $mobile);
     public function findByMobile1(string $mobile);
     public function save($citizen);
+    public function findById(int $id);
 }

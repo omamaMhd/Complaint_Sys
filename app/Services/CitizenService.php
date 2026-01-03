@@ -7,17 +7,23 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\NotificationService;
 
 
 use Exception;
 
 class CitizenService
 {
-    protected $repo;
+    const MAX_FAILED_ATTEMPTS = 8;
+    const LOCK_MINUTES = 10;
 
-    public function __construct(CitizenRepositoryInterface $repo)
+    protected $repo;
+    protected $notificationService;
+
+    public function __construct(CitizenRepositoryInterface $repo, NotificationService $notificationService)
     {
         $this->repo = $repo;
+        $this->notificationService = $notificationService;
     }
 
     public function register(array $data)
@@ -81,19 +87,58 @@ class CitizenService
         return ['ok' => true];
     }
 
-    public function login(string $mobile, string $password)
+public function login(string $mobile, string $password)
     {
         $citizen = $this->repo->findByMobile($mobile);
 
-        if (!$citizen || !Hash::check($password, $citizen->password)) {
+        if (!$citizen) {
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
         }
 
-        if (!$citizen->is_verified) {
-            return ['ok' => false, 'message' => 'Account not verified. Please verify your mobile number first.'];
+        /** 🔒 هل الحساب مقفول؟ */
+        if ($citizen->locked_until && now()->lessThan($citizen->locked_until)) {
+            return [
+                'ok' => false,
+                'message' => 'Account is temporarily locked. Please try again later.'
+            ];
         }
 
+        /** ❌ كلمة مرور خاطئة */
+        if (!Hash::check($password, $citizen->password)) {
+
+            $citizen->failed_login_attempts++;
+            $citizen->last_failed_login_at = now();
+
+            /** 🚨 وصل الحد الأعلى */
+            if ($citizen->failed_login_attempts >= self::MAX_FAILED_ATTEMPTS) {
+
+                $citizen->locked_until = now()->addMinutes(self::LOCK_MINUTES);
+
+                // 🔔 إشعار أمني
+                $this->notificationService->sendSecurityAlertNotification(
+                    $citizen,
+                    'Multiple failed login attempts'
+                );
+            }
+
+            $this->repo->save($citizen);
+
+            return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
+        }
+
+        /** ✅ تسجيل دخول ناجح */
+        if (!$citizen->is_verified) {
+            return ['ok' => false, 'message' => 'Account not verified.'];
+        }
+
+        // تصفير العدّادات
+        $citizen->failed_login_attempts = 0;
+        $citizen->locked_until = null;
+        $citizen->last_failed_login_at = null;
+        $this->repo->save($citizen);
+
         $token = $citizen->createToken('auth_token')->plainTextToken;
+
         return [
             'ok' => true,
             'citizen' => $citizen,
