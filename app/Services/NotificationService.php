@@ -140,4 +140,34 @@ class NotificationService
             'data' => $data
         ]);
     }
+
+    /**
+     * 4. إشعار أمني عند قفل الحساب
+     */
+    // App\Services\NotificationService.php
+
+public function sendSecurityAlertNotification($citizen, string $reason)
+{
+    // حفظ في DB
+    $this->saveToDatabase($citizen, 'security_alert', [
+        'title' => 'Security Alert',
+        'message' => 'Your account has been temporarily locked due to multiple failed login attempts.',
+        'reason' => $reason,
+        'locked_until' => $citizen->locked_until?->format('Y-m-d H:i:s')
+    ]);
+
+    // إرسال FCM
+    if ($citizen->fcm_token) {
+        $this->fcmService->sendToCitizen(
+            $citizen->id,
+            '🚨 Security Alert',
+            'Your account has been temporarily locked due to multiple failed login attempts.',
+            [
+                'type' => 'security_alert',
+                'locked_until' => $citizen->locked_until?->format('Y-m-d H:i:s')
+            ]
+        );
+    }
+}
+
 }

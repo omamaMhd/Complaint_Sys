@@ -7,13 +7,19 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CitizenNotificationController;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
+
+RateLimiter::for('citizen-login', function ($request) {
+    return Limit::perMinute(5)->by($request->ip());
+});
 
 // Citizen
 Route::get('/complaints/track/{reference}', [ComplaintController::class, 'track']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verify', [AuthController::class, 'verifyCode']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:citizen-login');
 Route::post('/resend', [AuthController::class, 'resendVerificationCode']);
 
 // Admin
@@ -69,4 +75,7 @@ Route::get('/complaints/{id}/notes', [ComplaintController::class, 'myComplaintNo
     Route::post('/notifications/{id}/read', [CitizenNotificationController::class, 'markAsRead']);
 
      Route::post('/fcm-token', [CitizenNotificationController::class, 'updateFcmToken']);
+
+
+
 });

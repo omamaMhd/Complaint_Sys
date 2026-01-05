@@ -20,4 +20,9 @@ class ComplaintHistory extends Model
     {
         return $this->belongsTo(Complaint::class, 'complaint_id');
     }
+    public function performedBy()
+{
+    return $this->belongsTo(\App\Models\User::class, 'performed_by');
+}
+
 }

@@ -13,6 +13,10 @@ use Carbon\Carbon;
 use App\Notifications\ComplaintStatusChanged;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+//use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+
 
 class ComplaintService
 {
@@ -276,8 +280,6 @@ public function changeStatus(
 
               // ✅ التحقق أولاً ثم إرسال الإشعار
         $this->repo->update($complaint, $newStatus);
-
-            // ['status' => $newStatus]);
 
             $this->historyRepo->create([
                 'complaint_id' => $complaintId,

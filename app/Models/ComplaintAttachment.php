@@ -16,4 +16,11 @@ class ComplaintAttachment extends Model
     {
         return $this->belongsTo(Complaint::class, 'complaint_id');
     }
+
+    public function uploader()
+{
+    return $this->belongsTo(\App\Models\User::class, 'uploaded_by');
+}
+
+
 }

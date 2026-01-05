@@ -25,4 +25,13 @@ class CitizenRepository implements CitizenRepositoryInterface
     {
         return $citizen->save();
     }
+
+    public function findById(int $id)
+    {
+    return Citizen::withTrashed()->find($id);
+    }
+
+
+
+
 }

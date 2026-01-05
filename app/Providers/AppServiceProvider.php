@@ -14,6 +14,22 @@ class AppServiceProvider extends ServiceProvider
      * Register any application services.
      */
     public function register(): void
+{
+    $this->app->bind(
+        CitizenRepositoryInterface::class,
+        CitizenRepository::class
+    );
+
+    $this->app->bind(
+        EmployeeRepositoryInterface::class,
+        EmployeeRepository::class
+    );
+
+    // ❌ احذف CitizenService binding
+}
+
+    /*
+    public function register(): void
     {
       $this->app->bind(
           CitizenRepositoryInterface::class,
@@ -34,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+    
     public function boot(): void
     {
         //

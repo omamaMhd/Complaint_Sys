@@ -117,6 +117,7 @@ public function myComplaintNotes($complaintId)
 //             'complaint' => $complaint
 //         ]);
 //     }
+      //  $complaint = $this->service->changeStatus($id, $request->status, auth()->id());
 
 public function Change_Status(Request $request, int $id)
 {
@@ -207,8 +208,6 @@ public function Add_Note(Request $request, $id)
         $note = $this->service->addNote(
             $id,
             $request->note,
-            auth()->user()->responsible_party,
-            auth()->id()
         );
 
         return response()->json([
@@ -219,7 +218,7 @@ public function Add_Note(Request $request, $id)
     } catch (\Exception $e) {
         return response()->json([
             'message' => $e->getMessage()
-        ], $e->getMessage() === "Unauthorized" ? 403 : 404);
+        ], $e instanceof \Illuminate\Http\Exceptions\HttpResponseException ? $e->getResponse()->status() : 500);
     }
 }
 
