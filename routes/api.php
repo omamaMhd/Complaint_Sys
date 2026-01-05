@@ -20,7 +20,14 @@ Route::post('/resend', [AuthController::class, 'resendVerificationCode']);
 Route::post('/login1', [AdminController::class, 'login1']);//هي للادمن 
 
 Route::post('/employee/login', [EmployeeController::class, 'login']);
-
+///////////////////////////////////////////
+Route::get('/whoami', function () {
+    return response()->json([
+        'server_id' => config('app.server_id'),
+        'time' => now(),
+    ]);
+});
+//////////////////////////////////////////////////
 
 Route::middleware('auth:sanctum')->group(function () {
 Route::post('/change-password', [EmployeeController::class, 'changePassword']);
@@ -37,7 +44,7 @@ Route::post('/change-password', [EmployeeController::class, 'changePassword']);
     //     ->middleware('auth:admin');
 
     Route::get('/complaints/{id}/history', [ComplaintController::class, 'history']);
-
+Route::get('/complaints/{id}/notes', [ComplaintController::class, 'myComplaintNotes']);
     // employee 
     Route::get('/departmentComplaints', [ComplaintController::class, 'Department_Complaints']);
      // ->middleware( 'permission:Department_Complaints'); 

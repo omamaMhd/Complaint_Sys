@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ComplaintHistory extends Model
 {
       protected $fillable = [
-        'complaint_id', 'performed_by', 'performed_by_type', 'action', 'data'
+        'complaint_id', 'performed_by', 'performed_by_name', 'performed_by_type', 'action', 'data'
     ];
 
     protected $casts = [
