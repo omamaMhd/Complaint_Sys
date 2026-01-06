@@ -23,36 +23,69 @@ class ComplaintController extends Controller
            return response()->json(['message' => 'Unauthorized. Admin or Employee access only.'], 403);}        
 
            return $next($request);
-        }) ->except(['store', 'track', 'myComplaints','addAttachment']);}
+        }) ->except(['store', 'track', 'myComplaints','addAttachment','myComplaintNotes']);}
 
 //تقديم شكوى 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'type' => 'required|string|max:100',
-            'location' => 'nullable|string|max:255',
-            'responsible_party'=>'nullable|string|max:255',
-            'description' => 'required|string|min:5',
-             'attachments' => 'nullable|array|max:5',
-             'attachments.*' => 'file|mimes:jpeg,png,jpg,pdf|max:5120'
-        ]);
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'type' => 'required|string|max:100',
+        'location' => 'nullable|string|max:255',
+        'responsible_party' => 'nullable|string|max:255',
+        'description' => 'required|string|min:5',
+        'attachments' => 'nullable|array|max:5',
+        'attachments.*' => 'file|mimes:jpeg,png,jpg,pdf|max:5120'
+    ]);
+
+    $citizenId = auth()->id();
+
+    $complaint = $this->service->createComplaint(
+        $validated,
+        $request->file('attachments', []),
+        $citizenId
+    );
+
+    // 🔥 سطر واحد مهم للاختبار
+    \Log::info('Complaint stored', [
+        'complaint_id' => $complaint->id,
+        'server_id' =>  config('app.server_id'),
+    ]);
+
+    return response()->json([
+        'message' => 'Complaint created successfully',
+        'reference' => $complaint->reference_number,
+        'id' => $complaint->id,
+        'server_id' => config('app.server_id'), // اختياري
+    ], 201);
+}
+
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'type' => 'required|string|max:100',
+    //         'location' => 'nullable|string|max:255',
+    //         'responsible_party'=>'nullable|string|max:255',
+    //         'description' => 'required|string|min:5',
+    //          'attachments' => 'nullable|array|max:5',
+    //          'attachments.*' => 'file|mimes:jpeg,png,jpg,pdf|max:5120'
+    //     ]);
 
 
-         $citizenId = auth()->id();
+    //      $citizenId = auth()->id();
 
-        $complaint = $this->service->createComplaint(
-            $validated,
-            $request->file('attachments', []),
-            $citizenId
-        );
+    //     $complaint = $this->service->createComplaint(
+    //         $validated,
+    //         $request->file('attachments', []),
+    //         $citizenId
+    //     );
         
 
-        return response()->json([
-            'message' => 'Complaint created successfully',
-            'reference' => $complaint->reference_number,
-            'id' => $complaint->id
-        ], 201);
-    }
+    //     return response()->json([
+    //         'message' => 'Complaint created successfully',
+    //         'reference' => $complaint->reference_number,
+    //         'id' => $complaint->id
+    //     ], 201);
+    // }
 //عرض كل مواطن الشكاوي التي قدمها 
    public function myComplaints()
 {
@@ -60,19 +93,58 @@ class ComplaintController extends Controller
     $list = $this->service->listUserComplaints($citizenId);
     return response()->json($list);
 }
+//عرض ملاحظات وطلبات معلومات اضافية على شكوى معينة من قبل المواطن
+public function myComplaintNotes($complaintId)
+{
+    $citizenId = auth()->id();
+
+    $notes = $this->service->getCitizenComplaintNotes($complaintId, $citizenId);
+
+    return response()->json([
+    
+        'data' => $notes
+    ]);
+}
 
 
-    public function Change_Status(Request $request, $id)
-    {
-        $request->validate(['status' => 'required|in:new,in_progress,completed,rejected']);
+//     public function Change_Status(Request $request, $id)
+//     {
+//         $request->validate(['status' => 'required|in:new,in_progress,completed,rejected']);
+// $byUser = auth()->id();
+//         $complaint = $this->service->changeStatus($id, $request->status, auth()->id(),$byUser);
 
-        $complaint = $this->service->changeStatus($id, $request->status, auth()->id());
+//         return response()->json([
+//             'message' => 'Status updated',
+//             'complaint' => $complaint
+//         ]);
+//     }
+      //  $complaint = $this->service->changeStatus($id, $request->status, auth()->id());
 
-        return response()->json([
-            'message' => 'Status updated',
-            'complaint' => $complaint
-        ]);
+public function Change_Status(Request $request, int $id)
+{
+    $request->validate([
+        'status' => 'required|in:new,in_progress,completed,rejected',
+    ]);
+
+    $byUser = auth()->id();
+
+    if (!$byUser) {
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
+
+    $updatedComplaint = $this->service->changeStatus(
+        $id,
+        $request->status,
+        $byUser
+    );
+
+    return response()->json([
+        'message' => 'Status updated successfully',
+        'complaint' => $updatedComplaint
+    ]);
+}
+
+
 
     public function history($id)
     {

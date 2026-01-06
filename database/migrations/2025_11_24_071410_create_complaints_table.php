@@ -38,7 +38,7 @@ return new class extends Migration
 
             // Concurrency lock
             $table->foreignId('locked_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('locked_until')->nullable();
+            $table->timestamp('locked_at')->nullable();
             $table->timestamps();
         });
     }

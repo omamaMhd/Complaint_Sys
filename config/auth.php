@@ -49,10 +49,10 @@ return [
     //     'driver' => 'sanctum',
     //     'provider' => 'users',
     // ],
-       /* 'citizen' => [
-        'driver' => 'sanctum', 
-        'provider' => 'citizens',
-    ],*/
+    //     'citizen' => [
+    //     'driver' => 'sanctum', 
+    //     'provider' => 'citizens',
+    // ],
     ],
 
     /*

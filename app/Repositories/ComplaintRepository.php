@@ -2,8 +2,9 @@
 namespace App\Repositories;
 
 use App\Models\Complaint;
+use App\Models\User;
+use App\Models\Citizen;
 use Illuminate\Support\Facades\DB;
-
 class ComplaintRepository
 {
     public function create(array $data): Complaint
@@ -51,7 +52,7 @@ public function findByReferenceWithAttachments(string $ref)
 public function listForDepartment(string $department)
 {
     return Complaint::where('responsible_party', $department)
-        ->with('attachments')
+        ->with('attachments', 'histories')
         ->orderBy('created_at', 'desc')
         ->get();
 }
@@ -80,6 +81,71 @@ public function listForDepartment(string $department)
     ];
 }
 
+
+
+// محاولة قفل الشكوى للمعالجة من قبل موظف معين
+public function tryLock(int $complaintId, int $employeeId): bool
+{
+    $affected = DB::update(
+        "UPDATE complaints
+         SET locked_by = ?, locked_at = NOW()
+         WHERE id = ?
+           AND (
+                locked_by IS NULL
+                OR locked_at < NOW() - INTERVAL 2 MINUTE
+           )",
+        [$employeeId, $complaintId]
+    );
+
+    return $affected === 1;
+}
+//////////////////
+public function unlock(int $complaintId, int $employeeId): void
+{
+    DB::update(
+        "UPDATE complaints
+         SET locked_by = NULL, locked_at = NULL
+         WHERE id = ? AND locked_by = ?",
+        [$complaintId, $employeeId]
+    );
+}
+
+//تجربة القفل
+// public function tryLock(int $complaintId, int $employeeId): bool
+// {
+//     $ttl = 120; // مدة القفل بالثواني (دقيقتين)
+
+//     $affected = DB::update(
+//         "UPDATE complaints
+//          SET locked_by = ?, locked_at = NOW()
+//          WHERE id = ?
+//            AND (
+//                  locked_by IS NULL
+//                  OR locked_at < DATE_SUB(NOW(), INTERVAL ? SECOND)
+//             )",
+//         [$employeeId, $complaintId, $ttl]
+//     );
+
+//     return $affected === 1;
+// }
+
+public function getCitizenNameById(int $citizenId): string
+{
+    // $citizen = $this->model->find($citizenId);
+    // return $citizen ? $citizen->name : 'Unknown';
+    return Citizen::where('id', $citizenId)->value('username');
+}
+
+public function findNameById(int $id): ?string
+    {
+        return User::where('id', $id)->value('username');
+        // أو value('name') حسب عمودك
+    }
+    public function getDepartmentByUserId(int $id): string
+{
+     return User::where('id', $id)
+        ->value('responsible_party');
+}
 
 
 }

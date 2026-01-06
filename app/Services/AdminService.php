@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
@@ -98,6 +99,8 @@ class AdminService
             'user' => $user,
             'temp_password' => $tempPassword
         ];
+        Cache::forget('all_employees');
+Cache::forget('all_permissions');
     }
     /**
      * تحديث صلاحيات الموظف
@@ -126,23 +129,97 @@ class AdminService
             'old_permissions' => $employee->getPermissionNames()->toArray(),
             'new_permissions' => $permissions
         ]);
+        Cache::forget("employee_permissions_{$employee->id}");
+Cache::forget('all_employees');
     }
 
 
     /**
      * يعرض جميع الشكاوى (مخصص للمدير)
      */
+    // public function listAllComplaints()
+    // {
+    //     $complaints = $this->repo->getAllComplaints();
+    //     return ['ok' => true, 'data' => $complaints];
+    // }
+// public function listAllComplaints()
+// {
+//     return Cache::remember(
+//         'admin_complaints',
+//         30,
+//         fn () => [
+//             'ok' => true,
+//             'data' => $this->repo->getAllComplaints()
+//         ]
+//     );
+// }
+ /**
+     * تابع جديد: عرض معلومات المواطن والموظف للشكوى
+     */
+    // public function showComplaint($complaintId)
+    // {
+    //         $complaint = $this->repo->getComplaintDetails($complaintId);
+      
+    //         // تنسيق البيانات
+    //         $formattedData = [
+    //             'complaint_id' => $complaint->id,
+    //             'citizen' => $complaint->citizen ? [
+    //                 'id' => $complaint->citizen->id,
+    //                 'username' => $complaint->citizen->username,
+    //                 'mobile' => $complaint->citizen->mobile
+    //             ] : null,
+                
+    //             'handler' => $complaint->handler ? [
+    //                 'id' => $complaint->handler->id,
+    //                 'username' => $complaint->handler->username,
+    //                 'mobile' => $complaint->handler->mobile,
+    //                 'responsible_party' => $complaint->handler->responsible_party
+    //             ] : null,      
+                
+    //             'locked_by_user' => $complaint->lockedBy ? [
+    //                 'id' => $complaint->lockedBy->id,
+    //                 'username' => $complaint->lockedBy->username
+    //             ] : null
+    //         ];}
+    // public function listAllComplaints()
+    // {
+    //      return Cache::remember(
+    //     'admin_complaints',
+    //     30,
+    //     fn () => [
+    //     $user = auth()->user(),
+    //    if (!$user || !$user->hasRole('admin')) {
+    //         throw new HttpResponseException(
+    //             response()->json(['message' => 'Unauthorized token'], 403)
+    //         );
+    //     }
+    //     $complaints = $this->repo->getAllComplaints();
+    //     return ['ok' => true, 'data' => $complaints];
+    //     ]
+    // );
+    // }
     public function listAllComplaints()
-    {
-        $user = auth()->user();
-       if (!$user || !$user->hasRole('admin')) {
-            throw new HttpResponseException(
-                response()->json(['message' => 'Unauthorized token'], 403)
-            );
-        }
-        $complaints = $this->repo->getAllComplaints();
-        return ['ok' => true, 'data' => $complaints];
+{
+    $user = auth()->user();
+
+    if (!$user || !$user->hasRole('admin')) {
+        throw new HttpResponseException(
+            response()->json(['message' => 'Unauthorized token'], 403)
+        );
     }
+
+    $complaints = Cache::remember(
+        'admin_complaints',
+        30, // seconds
+        fn () => $this->repo->getAllComplaints()
+    );
+
+    return [
+        'ok' => true,
+        'data' => $complaints
+    ];
+}
+
 
 public function showComplaint(int $complaintId)
 {
