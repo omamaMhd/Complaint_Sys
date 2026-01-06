@@ -69,6 +69,10 @@ Route::post('/change-password', [EmployeeController::class, 'changePassword']);
 
      Route::post('/fcm-token', [CitizenNotificationController::class, 'updateFcmToken']);
 
-
+     //admin
+    Route::get('/statistics', [ComplaintController::class, 'statistics']);
+    Route::get('/reports/complaints/export/csv', [ComplaintController::class, 'exportCsv']);
+    Route::get('/reports/complaints/export/pdf', [ComplaintController::class, 'exportStatisticsPdf']);
+  
 
 });

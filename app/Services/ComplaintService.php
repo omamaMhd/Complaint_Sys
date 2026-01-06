@@ -311,5 +311,20 @@ public function getDepartmentComplaints(string $department)
         return $noteRecord;
     }
 
+    public function getStatistics()
+    {
+    if (!auth()->user()->hasRole('admin')) {
+        throw new HttpResponseException(
+            response()->json(['message' => 'Unauthorized'], 403)
+        );
+    }
+
+    return $this->repo->statistics();
+    }
+
+
+
+
+    
 
 }
