@@ -7,6 +7,7 @@ use App\Services\ComplaintService;
 use App\Repositories\ComplaintRepository;
 use App\Models\Complaint;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ComplaintController extends Controller
 {
@@ -253,6 +254,66 @@ public function Add_Note(Request $request, $id)
     }
 }
 
+<<<<<<< HEAD
+=======
+    public function statistics()
+    {
+    return response()->json(
+        $this->service->getStatistics()
+    );
+}
+    
+    public function exportCsv()
+    {
+        if (!auth()->user()->hasRole('admin')) {
+        throw new HttpResponseException(
+            response()->json(['message' => 'Unauthorized'], 403)
+        );
+    }
+    $complaints = Complaint::all();
+
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename=complaints.csv',
+    ];
+
+    $callback = function () use ($complaints) {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, ['ID', 'Status', 'Department', 'Created At']);
+
+        foreach ($complaints as $c) {
+            fputcsv($file, [
+                $c->id,
+                $c->status,
+                $c->responsible_party,
+                $c->created_at,
+            ]);
+        }
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+public function exportStatisticsPdf()
+{
+    if (!auth()->user()->hasRole('admin')) {
+        throw new HttpResponseException(
+            response()->json(['message' => 'Unauthorized'], 403)
+        );
+    }
+    $stats = $this->service->getStatistics();
+
+    $pdf = Pdf::loadView('reports.statistics', [
+        'stats' => $stats
+    ]);
+
+    return $pdf->download('complaint_statistics.pdf');
+}
+
+
+>>>>>>> 7a800d545bae5e07b6d64490fd460ac5aabb015c
 
 }
 

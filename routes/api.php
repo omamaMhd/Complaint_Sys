@@ -123,6 +123,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/complaints/{id}/history', [ComplaintController::class, 'history'])->name('complaint.history');
     Route::get('/complaints/{id}/notes', [ComplaintController::class, 'myComplaintNotes'])->name('complaint.notes');
 
+<<<<<<< HEAD
     // Department / Employee
     Route::get('/departmentComplaints', [ComplaintController::class, 'Department_Complaints'])->name('complaint.department');
     Route::post('/complaints/{id}/status', [ComplaintController::class, 'Change_Status'])->name('complaint.changeStatus');
@@ -134,6 +135,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/employe/{id}/permissions', [AdminController::class, 'getEmployeeWithPermissions'])->name('admin.getEmployeePermissions');
     Route::post('/employe/{id}/UpdatePer', [AdminController::class, 'updateEmployeePermissions'])->name('admin.updateEmployeePermissions');
     Route::get('/Allpermissions', [AdminController::class, 'listPermissions'])->name('admin.listPermissions');
+=======
+     //admin
+    Route::get('/statistics', [ComplaintController::class, 'statistics']);
+    Route::get('/reports/complaints/export/csv', [ComplaintController::class, 'exportCsv']);
+    Route::get('/reports/complaints/export/pdf', [ComplaintController::class, 'exportStatisticsPdf']);
+  
+>>>>>>> 7a800d545bae5e07b6d64490fd460ac5aabb015c
 
     // Admin Complaints
     Route::get('/Admin/complaints', [AdminController::class, 'index'])->name('admin.complaints.index');

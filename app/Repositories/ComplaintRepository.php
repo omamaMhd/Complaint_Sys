@@ -56,6 +56,30 @@ public function listForDepartment(string $department)
         ->orderBy('created_at', 'desc')
         ->get();
 }
+    public function statistics()
+{
+    return [
+        'total Complaints' => Complaint::count(),
+
+        'by_status' => Complaint::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')->get(),
+
+        'by_department' => Complaint::select('responsible_party', DB::raw('count(*) as total'))
+            ->groupBy('responsible_party')->get(),
+
+        'today' => Complaint::whereDate('created_at', today())->count(),
+
+        'this_week' => Complaint::whereBetween('created_at', [
+            now()->startOfWeek(),
+            now()->endOfWeek()
+        ])->count(),
+
+        'most_busy_department' => Complaint::select('responsible_party', DB::raw('count(*) as total'))
+            ->groupBy('responsible_party')
+            ->orderByDesc('total')
+            ->first(),
+    ];
+}
 
 
 
