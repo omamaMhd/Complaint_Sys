@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Aspects\TraceContext;
+use App\Aspects\TraceAspect;
 
 
 use Exception;
@@ -27,7 +29,11 @@ class AdminService
     public function login(string $mobile, string $password)
     {
         $user = $this->repo->findByMobile($mobile);
-
+TraceContext::setEntity('user', $user?->id);
+TraceAspect::record(
+    userId: $user->id,
+    userRole: $user->role
+);
         if (!$user || !Hash::check($password, $user->password)) {
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
         }
@@ -82,6 +88,7 @@ class AdminService
         'responsible_party' => $data['responsible_party'],
         'must_change_password' => true,
     ]);
+    TraceContext::setEntity('user', $user?->id);
  // تعيين دور الموظف
     $user->assignRole('employee');
     // منح الصلاحيات المحددة
@@ -122,6 +129,7 @@ Cache::forget('all_permissions');
         
         // مزامنة الصلاحيات الجديدة
         $employee->syncPermissions($permissions);
+        TraceContext::setEntity('user', $user?->id);
 // تسجيل التغيير في السجل
         \Log::info('🔄 Employee permissions updated', [
             'admin_id' => auth()->id(),
@@ -207,7 +215,7 @@ Cache::forget('all_employees');
             response()->json(['message' => 'Unauthorized token'], 403)
         );
     }
-
+TraceContext::setEntity('complaint', $user?->id);
     $complaints = Cache::remember(
         'admin_complaints',
         30, // seconds
@@ -221,42 +229,141 @@ Cache::forget('all_employees');
 }
 
 
-public function showComplaint(int $complaintId)
+// public function showComplaint(int $complaintId)
+// {
+//     $complaint = $this->repo->getComplaintDetails($complaintId);
+
+//     $complaint->histories = $complaint->histories->map(function($h) {
+//         $history = [
+//             'id' => $h->id,
+//             'complaint_id' => $h->complaint_id,
+//             'action' => $h->action,
+//             'data' => $h->data,
+//             'created_at' => $h->created_at,
+//             'updated_at' => $h->updated_at,
+//         ];
+//         // ⭐⭐ التعديل هنا: فقط لـ status_changed و note_added ⭐⭐
+//         if (in_array($h->action, ['status_changed', 'note_added']) && $h->performedBy) {
+//             $history['performed_by'] = [
+//                 'id' => $h->performedBy->id,
+//                 'username' => $h->performedBy->username
+//             ];
+//         }
+//         // ⭐ لا نضيف performed_by للحالات الأخرى ⭐
+//         return $history;
+//     });
+//     // تنظيف المرفقات
+//     $complaint->attachments = $complaint->attachments->map(function($att) {
+//         return [
+//             'id' => $att->id,
+//             'complaint_id' => $att->complaint_id,
+//             'path' => $att->path,
+//             'original_name' => $att->original_name,
+//             'created_at' => $att->created_at,
+//             'updated_at' => $att->updated_at,
+//         ];
+//     });
+
+//     return $complaint;
+// }
+
+ public function showComplaint(int $complaintId)
 {
+    // جلب تفاصيل الشكوى مع الهيستوري والمرفقات
     $complaint = $this->repo->getComplaintDetails($complaintId);
 
+    // تحويل الهيستوري
     $complaint->histories = $complaint->histories->map(function($h) {
         $history = [
             'id' => $h->id,
             'complaint_id' => $h->complaint_id,
             'action' => $h->action,
             'data' => $h->data,
+            'performed_by_id' => $h->performed_by ?? null,
+            'performed_by_type' => $h->performed_by_type ?? null,
+            'performed_by_name' => $h->performed_by_name ?? null,
             'created_at' => $h->created_at,
             'updated_at' => $h->updated_at,
         ];
-        // ⭐⭐ التعديل هنا: فقط لـ status_changed و note_added ⭐⭐
-        if (in_array($h->action, ['status_changed', 'note_added']) && $h->performedBy) {
-            $history['performed_by'] = [
-                'id' => $h->performedBy->id,
-                'username' => $h->performedBy->username
-            ];
-        }
-        // ⭐ لا نضيف performed_by للحالات الأخرى ⭐
+
+        // // إذا موجود علاقة المستخدم اللي عمل الإجراء (performedBy) نضيفه
+        // if ($h->performedBy) {
+        //     $history['performed_by_details'] = [
+        //         'id' => $h->performedBy->id,
+        //         'username' => $h->performedBy->username,
+        //         'email' => $h->performedBy->email ?? null,
+        //         'role' => $h->performedBy->roles->pluck('name')->toArray() ?? []
+        //     ];
+        // }
+
         return $history;
     });
-    // تنظيف المرفقات
-    $complaint->attachments = $complaint->attachments->map(function($att) {
-        return [
-            'id' => $att->id,
-            'complaint_id' => $att->complaint_id,
-            'path' => $att->path,
-            'original_name' => $att->original_name,
-            'created_at' => $att->created_at,
-            'updated_at' => $att->updated_at,
-        ];
-    });
+
+    // // تحويل المرفقات
+    // $complaint->attachments = $complaint->attachments->map(function($att) {
+    //     return [
+    //         'id' => $att->id,
+    //         'complaint_id' => $att->complaint_id,
+    //         'path' => $att->path,
+    //         'original_name' => $att->original_name,
+    //         'created_at' => $att->created_at,
+    //         'updated_at' => $att->updated_at,
+    //     ];
+    // });
 
     return $complaint;
 }
+
+// public function showComplaint(int $complaintId)
+// {
+//     $complaint = $this->repo->getComplaintDetails($complaintId);
+
+//     $complaint->histories = $complaint->histories
+//         ->map(function ($h) use ($complaint) {
+//             $history = [
+//                 // 'id' => $h->id,
+//                 // 'complaint_id' => $h->complaint_id,
+//                 // 'performed_by' => $h->performed_by, // سيتم تعبئتها لاحقًا
+//                 // 'performed_by_type' => $h->performed_by_type,
+//                 // 'performed_by_name' => $h->performed_by_name,
+//                 // 'action' => $h->action,
+//                 // 'data' => $h->data,
+//                 // 'created_at' => $h->created_at,
+//                 // 'updated_at' => $h->updated_at,
+//             ];
+
+//             // ⭐ إذا أول حدث "created" من user (المواطن) → استخدم اسمه الحقيقي
+//             // if ($h->action === 'created' && $h->performed_by_type === 'user') {
+//             //     $history['performed_by'] = [
+//             //         'id' => $complaint->citizen->id,
+//             //         'username' => $complaint->citizen->username,
+//             //     ];
+//             // }
+
+//             // ⭐ باقي الأحداث لموظفين
+//             if ($h->performedBy && $h->performed_by_type === 'employee') {
+//                 $history['performed_by'] = [
+//                     'id' => $h->performedBy->id,
+//                     'username' => $h->performedBy->username
+//                 ];
+//             }
+
+//             return $history;
+//         });
+
+//     // تنظيف المرفقات
+//     $complaint->attachments = $complaint->attachments->map(function ($att) {
+//         return [
+//             'id' => $att->id,
+//             'complaint_id' => $att->complaint_id,
+//             'path' => $att->path,
+//             'original_name' => $att->original_name,
+//             'created_at' => $att->created_at,
+//             'updated_at' => $att->updated_at,
+//         ];
+//     });
+
+//     return $complaint;
+// }
 
 }

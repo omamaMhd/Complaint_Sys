@@ -7,7 +7,8 @@ use App\Services\AdminService;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\System_trace;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class AdminController extends Controller
 {
     protected $service;
@@ -204,5 +205,86 @@ class AdminController extends Controller
                 404
             );
         }
+    }
+
+
+//
+      public function indexs(Request $request)
+    {
+        $query = System_trace::query();
+
+        // فلترة حسب request
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        if ($request->filled('user_role')) {
+            $query->where('user_role', $request->user_role);
+        }
+
+        if ($request->filled('entity')) {
+            $query->where('entity', $request->entity);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('from')) {
+            $query->whereDate('created_at', '>=', $request->from);
+        }
+
+        if ($request->filled('to')) {
+            $query->whereDate('created_at', '<=', $request->to);
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        // إذا المستخدم طلب CSV
+        if ($request->query('export') === 'csv') {
+            return $this->exportCsv($query->get());
+        }
+
+        // Paginate JSON (افتراضي)
+        $traces = $query->paginate(50);
+
+        return response()->json($traces);
+    }
+
+    /**
+     * تصدير CSV
+     */
+    private function exportCsv($traces)
+    {
+        $response = new StreamedResponse(function() use ($traces) {
+            $handle = fopen('php://output', 'w');
+
+            // رأس CSV
+            fputcsv($handle, [
+                'trace_id','user_id','user_role','action','entity','entity_id','status','context','created_at','updated_at'
+            ]);
+
+            foreach ($traces as $trace) {
+                fputcsv($handle, [
+                    $trace->trace_id,
+                    $trace->user_id,
+                    $trace->user_role,
+                    $trace->action,
+                    $trace->entity,
+                    $trace->entity_id,
+                    $trace->status,
+                    $trace->context,
+                    $trace->created_at,
+                    $trace->updated_at,
+                ]);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="system_traces.csv"');
+
+        return $response;
     }
 }

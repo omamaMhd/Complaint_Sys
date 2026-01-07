@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Aspects\TraceContext;
+use App\Aspects\TraceAspect;
 use App\Services\NotificationService;
 
 
@@ -35,7 +37,11 @@ class CitizenService
         $data['is_verified'] = false;
 
         $citizen = $this->repo->create($data);
-
+        TraceContext::setEntity('citizen', $citizen->id);
+        TraceAspect::record(
+    userId: $citizen->id,
+    userRole: 'citizen'
+            );
         // dispatch whatsapp send job (or call directly)
         event(new \App\Events\CitizenVerificationCodeGenerated($citizen));
 
@@ -90,7 +96,11 @@ class CitizenService
 public function login(string $mobile, string $password)
     {
         $citizen = $this->repo->findByMobile($mobile);
-
+TraceContext::setEntity('citizen', $citizen->id);
+ TraceContext::record(
+    userId: $citizen->id,
+    userRole: 'citizen'
+            );
         if (!$citizen) {
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
         }
@@ -122,7 +132,7 @@ public function login(string $mobile, string $password)
             }
 
             $this->repo->save($citizen);
-
+ 
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
         }
 
@@ -154,11 +164,12 @@ public function login(string $mobile, string $password)
                  'message' => 'Citizen not authenticated.'
             ];
         }
+        
         $token = $citizen->currentAccessToken();
         if ($token) {
             $token->delete();
         }
-
+ TraceContext::setEntity('citizen', $citizen->id);
         return [
             'status' => 200,
            'message' => 'Logged out successfully.'

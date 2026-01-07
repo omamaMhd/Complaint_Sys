@@ -15,6 +15,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\CitizenVerificationCodeGenerated::class => [
             \App\Listeners\SendWhatsAppVerification::class,
         ],
+         \App\Events\ComplaintStatusChanged::class => [
+        \App\Listeners\ClearComplaintCache::class,
+    ],
     ];
 
     /**

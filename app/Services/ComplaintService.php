@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use App\Notifications\ComplaintStatusChanged;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use App\Aspects\TraceAspect;
+use App\Aspects\TraceContext;
 //use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
@@ -93,18 +95,25 @@ public function createComplaint(array $data, array $files, int $citizenId)
                     'attachments'=> $attachmentsData
                 ]
             ]);
+            // // تسجيل التتبع
+            // app(\App\Aspects\TraceAspect::class)->record(
+            //     'create_complaint',
+            //     'complaint',
+            //     $complaint->id
+            // );
+TraceContext::setEntity('complaint', $complaint->id);
 
-            Log::info("Complaint created with " . count($attachmentsData) . " attachments");
+           // Log::info("Complaint created with " . count($attachmentsData) . " attachments");
 
             // إرسال إشعار
             app(\App\Services\NotificationService::class)
                 ->sendComplaintCreatedNotification($complaint);
 
             // كسر الكاش
-            Cache::forget("my_complaints_user_{$citizenId}");
-            Cache::forget('admin_complaints');
-            Cache::forget("department_complaints_{$complaint->responsible_party}");
-
+            // Cache::forget("my_complaints_user_{$citizenId}");
+            // Cache::forget('admin_complaints');
+            // Cache::forget("department_complaints_{$complaint->responsible_party}");
+event(new \App\Events\ComplaintStatusChanged($complaint));
             return $complaint;
         });
 
@@ -134,6 +143,7 @@ public function getCitizenComplaintNotes(int $complaintId, int $citizenId)
         60,
         fn () => $this->historyRepo->getNotesForCitizenComplaint($complaintId)
     );
+    TraceContext::setEntity('complaint', $complaint->id);
 }
 
 
@@ -149,6 +159,7 @@ public function getCitizenComplaintNotes(int $complaintId, int $citizenId)
         30,
         fn () => $this->repo->listByCitizen($citizenId)
     );
+    TraceContext::setEntity('complaint', $complaint->id);
 }
 
     // public function lockForProcessing(int $complaintId, int $adminId, $ttl = 600): bool
@@ -289,7 +300,14 @@ public function changeStatus(
                 'action' => 'status_changed',
                 'data' => ['old' => $old, 'new' => $newStatus]
             ]);
-
+            // // تسجيل التتبع
+            //     TraceAspect::record(
+            //     'change_status',
+            //     'complaint',
+            //     $complaintId,
+            //     ['old' => $old, 'new' => $newStatus]
+            // );
+            TraceContext::setEntity('complaint', $complaint->id);
         // ✅ هنا أرسل الإشعار - بعد التأكد من التغيير
         $notificationService = app(\App\Services\NotificationService::class);
         $notificationService->sendStatusChangeNotification($complaint, $old, $newStatus);
@@ -303,11 +321,12 @@ public function changeStatus(
         $this->repo->unlock($complaintId, $byUser);
             Log::info("Complaint status changed id={$complaintId} from={$old} to={$newStatus} by={$byUser}");
 // 🧹 كسر الكاش بعد تغيير الحالة
-Cache::forget("complaint_history_{$complaintId}");
-Cache::forget("my_complaints_user_{$complaint->citizen_id}");
-Cache::forget("department_complaints_{$complaint->responsible_party}");
-Cache::forget('admin_complaints');
-Cache::forget("track_complaint_{$complaint->reference_number}");
+// Cache::forget("complaint_history_{$complaintId}");
+// Cache::forget("my_complaints_user_{$complaint->citizen_id}");
+// Cache::forget("department_complaints_{$complaint->responsible_party}");
+// Cache::forget('admin_complaints');
+//Cache::forget("track_complaint_{$complaint->reference_number}");
+event(new \App\Events\ComplaintStatusChanged($complaint));
 
         return $this->repo->find($complaintId);
     });
@@ -351,10 +370,17 @@ $employeeName = $this->repo->findNameById($employeeId) ?? 'Unknown';
             'complaint_id' => $complaintId,
             'performed_by' => $employeeId,
             'performed_by_name' => $employeeName,
+            'performed_by_type' => 'employee',
             'action' => 'note_added',
             'data' => ['note' => $note]
         ]);
-
+        // تسجيل التتبع
+        //  TraceAspect::record(
+        //         'add_note',
+        //         'complaint',
+        //         $complaintId
+        //     );
+         TraceContext::setEntity('complaint', $complaint->id);
         // 🔔 إشعار المواطن
         $notificationService = app(\App\Services\NotificationService::class);
         $notificationService->sendNoteAddedNotification($complaint, $note);
@@ -368,9 +394,13 @@ $employeeName = $this->repo->findNameById($employeeId) ?? 'Unknown';
         // );
         $this->repo->unlock($complaintId, $employeeId);
        // 🧹 كسر كاش التاريخ وتفاصيل الشكوى
-Cache::forget("complaint_history_{$complaintId}");
-Cache::forget("track_complaint_{$complaint->reference_number}");
-Cache::forget("complaint_notes_{$complaintId}");
+// Cache::forget("complaint_history_{$complaintId}");
+// Cache::forget("track_complaint_{$complaint->reference_number}");
+// Cache::forget("complaint_notes_{$complaintId}");
+//  Cache::forget('admin_complaints');
+//  Cache::forget("my_complaints_user_{$complaint->citizen_id}");
+//  Cache::forget("department_complaints_{$complaint->responsible_party}");
+event(new \App\Events\ComplaintStatusChanged($complaint));
 
         return $noteRecord;
     });
@@ -394,10 +424,8 @@ public function getById(int $id)
         60, // مدة الكاش (ثانية)
         fn () => $this->historyRepo->forComplaint($complaintId)
     );
+
 }
-
-
-
 
 
 public function addAttachment(int $complaintId, $file, int $uploadedBy)
@@ -432,12 +460,27 @@ public function addAttachment(int $complaintId, $file, int $uploadedBy)
         'original_name' => $file->getClientOriginalName(),
         'uploaded_by' => $uploadedBy
     ]);
+    $this->historyRepo->create([
+        'complaint_id' => $complaintId,
+        'performed_by' => $uploadedBy,
+        'performed_by_name' => $complaint->citizen->username ?? 'Unknown',
+        'performed_by_type' => 'user',
+        'action' => 'attachment_added',
+        'data' => [
+            'id' => $attachment->id,
+            'path' => $attachment->path,
+            'original_name' => $attachment->original_name
+        ]
+    ]);
 // 🧹 كسر كاش التتبع والتاريخ بعد إضافة مرفق
 Cache::forget("complaint_history_{$complaintId}");
 Cache::forget("track_complaint_{$complaint->reference_number}");
 
+TraceContext::setEntity('attachments', $complaint->id);
     return $attachment;
 }
+
+
 // public function trackComplaint(string $reference)
 // {
 //     return $this->repo->findByReferenceWithAttachments($reference);
@@ -464,6 +507,8 @@ public function getDepartmentComplaints(string $department)
         30,
         fn () => $this->repo->listForDepartment($department)
     );
+    TraceContext::setEntity('complaint', $complaint->id);
+    
 }
 
 

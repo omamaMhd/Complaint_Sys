@@ -29,11 +29,11 @@ public function getComplaintDetails(int $complaintId)
         'citizen:id,username,mobile,created_at,updated_at,deleted_at',
         'handler:id,username,mobile,responsible_party',
         'lockedBy:id,username',
-        'attachments:id,complaint_id,path,original_name,created_at,updated_at',
-        'histories' => function($query) {
-            $query->orderBy('created_at', 'asc')
-                  ->with(['performedBy:id,username']);
-        }
+       // 'attachments:id,complaint_id,path,original_name,created_at,updated_at',
+        // 'histories' => function($query) {
+        //     $query->orderBy('created_at', 'asc')
+        //           ->with(['performedBy:id,username']);
+        
     ])->findOrFail($complaintId);
 }
 

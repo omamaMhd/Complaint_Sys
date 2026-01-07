@@ -150,6 +150,7 @@ public function Change_Status(Request $request, int $id)
         $history = $this->service->getHistory($id);
         return response()->json($history);
     }
+
 // اضافة مرفقات للشكوى 
     public function addAttachment(Request $request, $id)
 {
@@ -176,6 +177,7 @@ public function Change_Status(Request $request, int $id)
     ], 201);
 }
 
+
 public function track($reference)
 {
     $complaint = $this->service->trackComplaint($reference);
@@ -198,6 +200,29 @@ public function Department_Complaints()
 
 }
 // اضافة ملاحظة على الشكوى وطلب معلومات اضافية من المواطن
+// public function Add_Note(Request $request, $id)
+// {
+//     $request->validate([
+//         'note' => 'required|string|min:3'
+//     ]);
+
+//     try {
+//         $note = $this->service->addNote(
+//             $id,
+//             $request->note,
+//         );
+
+//         return response()->json([
+//             'message' => 'Note added successfully',
+//             'note' => $note
+//         ]);
+
+//     } catch (\Exception $e) {
+//         return response()->json([
+//             'message' => $e->getMessage()
+//         ], $e instanceof \Illuminate\Http\Exceptions\HttpResponseException ? $e->getResponse()->status() : 500);
+//     }
+// }
 public function Add_Note(Request $request, $id)
 {
     $request->validate([
@@ -205,9 +230,15 @@ public function Add_Note(Request $request, $id)
     ]);
 
     try {
+        $user = auth()->user(); // الموظف الحالي
+        $department = $user->responsible_party; // قسم الموظف
+        $employeeId = $user->id;
+
         $note = $this->service->addNote(
             $id,
             $request->note,
+            $department,
+            $employeeId
         );
 
         return response()->json([
@@ -221,6 +252,7 @@ public function Add_Note(Request $request, $id)
         ], $e instanceof \Illuminate\Http\Exceptions\HttpResponseException ? $e->getResponse()->status() : 500);
     }
 }
+
 
 }
 

@@ -30,10 +30,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'request.timing' => \App\Http\Middleware\RequestTiming::class,
             'throttle.json' => \App\Http\Middleware\HandleThrottleJsonResponse::class,
+            'trace.request' => \App\Http\Middleware\TraceRequest::class,
         ]);
 
         $middleware->api(append: [
             \App\Http\Middleware\RequestTiming::class,
+            \App\Http\Middleware\TraceRequest::class,
         ]);
         
         $middleware->priority([
