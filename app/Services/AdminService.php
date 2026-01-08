@@ -30,9 +30,14 @@ class AdminService
     {
         $user = $this->repo->findByMobile($mobile);
 TraceContext::setEntity('user', $user?->id);
-TraceAspect::record(
-    userId: $user->id,
-    userRole: $user->role
+// TraceAspect::record(
+//     userId: $user->id,
+//     userRole: $user->role
+// );
+ // );
+    TraceContext::setActor(
+    $user->id,
+    $user->roles->pluck('name')->first()
 );
         if (!$user || !Hash::check($password, $user->password)) {
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];

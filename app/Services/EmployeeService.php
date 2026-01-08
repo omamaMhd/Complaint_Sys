@@ -24,7 +24,7 @@ class EmployeeService
             'credentials' => ['Invalid mobile or password'],
         ]);
     }
-    $role = $employee->roles->pluck('name')->first(); // admin | employee
+    //$role = $employee->roles->pluck('name')->first(); // admin | employee
 
     // TraceAspect::record(
     //     userId: $employee->id,
