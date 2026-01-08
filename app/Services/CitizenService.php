@@ -38,10 +38,11 @@ class CitizenService
 
         $citizen = $this->repo->create($data);
         TraceContext::setEntity('citizen', $citizen->id);
-        TraceAspect::record(
-    userId: $citizen->id,
-    userRole: 'citizen'
-            );
+    //     TraceContext::setActor(
+    // userId: $citizen->id,
+    // userRole: 'citizen'
+    //         );
+    TraceContext::setActor($citizen->id, 'citizen');
         // dispatch whatsapp send job (or call directly)
         event(new \App\Events\CitizenVerificationCodeGenerated($citizen));
 
@@ -97,10 +98,7 @@ public function login(string $mobile, string $password)
     {
         $citizen = $this->repo->findByMobile($mobile);
 TraceContext::setEntity('citizen', $citizen->id);
- TraceContext::record(
-    userId: $citizen->id,
-    userRole: 'citizen'
-            );
+ TraceContext::setActor($citizen->id, 'citizen');
         if (!$citizen) {
             return ['ok' => false, 'message' => 'Invalid mobile number or password.'];
         }
