@@ -254,8 +254,6 @@ public function Add_Note(Request $request, $id)
     }
 }
 
-<<<<<<< HEAD
-=======
     public function statistics()
     {
     return response()->json(
@@ -313,7 +311,6 @@ public function exportStatisticsPdf()
 }
 
 
->>>>>>> 7a800d545bae5e07b6d64490fd460ac5aabb015c
 
 }
 
