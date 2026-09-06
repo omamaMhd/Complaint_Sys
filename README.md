@@ -1,66 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🖥️ Government Complaint System - Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains the robust backend architecture for a comprehensive digital Government Complaint System. The system empowers citizens to submit and track complaints via a mobile app, while providing government employees and administrators with a powerful web dashboard for management and oversight. 
 
-## About Laravel
+The backend engineering heavily prioritizes **non-functional requirements** such as security, performance, scalability, concurrency control, and transparent tracing, adhering to modern software engineering best practices.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Tech Stack
+- **Language & Framework:** PHP 8.2 + Laravel 11
+- **Authentication & Security:** Laravel Sanctum (API Token Management), Spatie Laravel Permission (Role-Based Access Control - RBAC)
+- **Data Architecture:** Eloquent ORM + Repository Pattern (for clean separation of data access logic)
+- **Concurrency & Performance:** Redis (via Predis) for Rate Limiting, caching, and preventing race conditions
+- **Real-time Notifications:** Firebase Cloud Messaging (FCM) via `kreait/laravel-firebase`
+- **Reporting:** `barryvdh/laravel-dompdf` for generating administrative PDF reports
+- **Asynchronous Processing:** Laravel Queues & Jobs (for non-blocking notification dispatch and background tasks)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🏗️ Software Architecture
+The system is built upon a strict **Layered Architecture** to ensure Separation of Concerns (SoC), maintainability, and future scalability:
+1. **Presentation Layer:** API Controllers responsible for request handling, strict data validation, and returning standardized JSON responses.
+2. **Business Logic Layer:** Dedicated Service classes encapsulating complex rules (e.g., complaint workflow transitions, concurrency checks, and authorization logic).
+3. **Data Access Layer:** Repository Pattern implementation to abstract and centralize database queries.
+4. **Aspect-Oriented Programming (AOP):** Custom implementation of `TraceAspect` and `TraceContext` to elegantly intercept and handle cross-cutting concerns like Logging, Performance Monitoring, and Audit Trailing, keeping the core business logic clean and focused.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ⚡ Key Backend Features Implemented
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Advanced Authentication & Security
+- **OTP Verification:** Secure account creation and login flows requiring One-Time Password validation before granting system access.
+- **Brute-Force Protection:** Redis-based rate limiting to block rapid, repeated login attempts, temporarily locking accounts and triggering security alerts after a threshold of failed attempts.
+- **Strict Access Control (RBAC):** Granular permissions ensuring citizens can only view their own complaints, and government employees are strictly isolated to manage complaints within their specific department.
 
-## Laravel Sponsors
+### 2. Concurrency Control & Conflict Prevention
+- Implemented a robust locking mechanism to prevent race conditions. When an employee opens a complaint for processing, it is flagged as "Reserved". Any concurrent modification attempts by other users are safely rejected, ensuring data integrity.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Audit Trail & Versioning
+- Every state change, note addition, or attachment update generates an immutable, timestamped record in the complaint’s history. This fulfills the strict transparency and tracing requirements without requiring full system rollbacks.
 
-### Premium Partners
+### 4. Asynchronous Real-Time Notifications
+- Integrated FCM with Laravel Queues to dispatch instant push notifications to citizens upon complaint submission, status updates, or when additional information is requested by an employee, ensuring a non-blocking, high-performance user experience.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 5. Administrative Oversight & Reporting
+- Comprehensive Admin APIs for user management, role assignment, and system performance monitoring.
+- Secure export functionality for statistical data and complaint logs into CSV and PDF formats for administrative analysis.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Local Backend Setup
 
-## Code of Conduct
+To run the backend locally, ensure you have PHP 8.2+, Composer, and a database (MySQL/PostgreSQL) or Redis installed.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# 1. Clone the repository
+git clone https://github.com/omamaMhd/Complaint_Sys.git
+cd Complaint_Sys
 
-## Security Vulnerabilities
+# 2. Install PHP dependencies
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Set up environment variables
+cp .env.example .env
+php artisan key:generate
 
-## License
+# 4. Configure your database in the .env file, then run migrations and seeders
+php artisan migrate --seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 5. Start the development server and the queue worker
+php artisan serve
+php artisan queue:work
+
+
+# 6. Contributors
+
+- **omamaMhd** (Omama Mohamad)
+- **doaanassan2002**

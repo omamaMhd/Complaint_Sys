@@ -1,0 +1,3110 @@
+{
+	"info": {
+		"_postman_id": "f7301697-a6a5-4bf7-be58-083b66a04fee",
+		"name": "Complainte",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37656681"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "4|f502f1g8s3QpXIRmbyRJRiO32BHilJWWgl1mlVYc4352aa38",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "omama",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "0934738941",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "11111111",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "register.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "omama",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "0934737946",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "11111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Nov 2025 09:30:00 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Nov 2025 09:30:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"citizenId\": 5,\n    \"message\": \"Account created. Verification code sent via WhatsApp.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "verify",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "8|4hejedb2i0vbWB2YfhofLLT5qlTyRD9oUSifqdU6b122da4b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "0934737946",
+							"type": "text"
+						},
+						{
+							"key": "verification_code",
+							"value": "135862",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/verify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"verify"
+					],
+					"query": [
+						{
+							"key": "verification_code",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Verified successfully",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0934737946",
+									"type": "text"
+								},
+								{
+									"key": "verification_code",
+									"value": "59159",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/verify/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"verify",
+								"1"
+							],
+							"query": [
+								{
+									"key": "verification_code",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 14:25:12 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 14:25:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Verified successfully.\",\n    \"access_token\": \"1|FtYzck9mTspNVZUG1l28ndiuKBuZ5T8q6SBplKzJ0b3b23de\",\n    \"token_type\": \"Bearer\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Resend_code",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Resend_code",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0934737946",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/resend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"resend"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 14:55:59 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 14:55:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Verification code has been sent again.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "0934737946",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "11111111",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0934737946",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "11111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 15:00:30 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 15:00:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Login successfully.\",\n    \"citizen\": {\n        \"id\": 2,\n        \"username\": \"omama\",\n        \"mobile\": \"0934737946\",\n        \"is_verified\": true\n    },\n    \"access_token\": \"4|yomypeUxVD4oXcxrT41oYQuIW5olykM0zF6ZMXKI31c2d8d0\",\n    \"token_type\": \"Bearer\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|kB1AgXvi3DvU7PQ23sVUhtJQf3uMnQioxCUmDNMKcf533522",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Logout",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 15:02:14 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Nov 2025 15:02:14 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Logged out successfully.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "creatcomplaint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|htANkXPAS7XiGOvH0YeeVs6phqh9YaBv37Xn0YuV1c063e48",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "نظافة55",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "همك55",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "تراكم قمامة منذ أسبوع555",
+							"type": "text"
+						},
+						{
+							"key": "citizen_id",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "responsible_party",
+							"value": "شرطة المرور",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/complaints",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "truck",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/api/complaints/track/CMP-932a6c94-8f8b-41a9-aa9b-e25fae13df9e",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints",
+						"track",
+						"CMP-932a6c94-8f8b-41a9-aa9b-e25fae13df9e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addattachment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/G:/Api/روضة/روضة/٢٠٢٣٠٣٠٣_١٤٠٤٥٧.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/complaints/1/attachments",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints",
+						"1",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "my complaint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|IdqFF3D49PlK9G9r8rvqznomuCFr9wIVkkCWuIwD02f5fe11",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/complaints/my",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints",
+						"my"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employee/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "0999000002",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Temp1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/employee/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employee",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "first/change/password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0999000003",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "Temp1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/employee/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee",
+								"login"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:08:40 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:08:40 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"You must change your password first\",\n    \"must_change_password\": true,\n    \"token\": \"5|y6UeZ3KY29hffENQRU7ycp8AaeZ12qipSahBMq34a9e36fa0\"\n}"
+				},
+				{
+					"name": "login/again",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0999000002",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Temp1234",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/employee/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:06:26 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:06:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"4|D2KEU89g5UwpG5ZHj7BmZe9OdllE9PPGWgj5xugN120ce9a8\",\n    \"user\": {\n        \"id\": 3,\n        \"username\": \"موظف 2 - وزارة الداخلية\",\n        \"mobile\": \"0999000002\",\n        \"role\": null,\n        \"responsible_party\": \"وزارة الداخلية\",\n        \"fcm_token\": null,\n        \"must_change_password\": 0,\n        \"created_at\": \"2025-12-17T08:57:13.000000Z\",\n        \"updated_at\": \"2025-12-17T09:06:13.000000Z\",\n        \"deleted_at\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "employee/change-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|sMyAJYUij4Q2F6CV9JJvEVYewEHerfJekSC4Z9S16e7cef7c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "new_password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"change-password"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "change-password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "new_password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change-password"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:06:13 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:06:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Password changed successfully. Please login again.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "employee/logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|7prbn1Irby1bhGRp9meTkVxhZw0WMtXZOofiuiAl40b9d2d5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/employee/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employee",
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "logout",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/employee/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee",
+								"logout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:12:05 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 09:12:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Logged out successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "departmentComplaints",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "4|mQVJSr7mUBykJ9TGOk2pVuwP4Xe5KqhMJNbYwjDg4c80ae36",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/departmentComplaints",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"departmentComplaints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changeStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/complaints/2/status",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints",
+						"2",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addNote",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5|pePGYIDU5OvsVHTrRQRUo81A1VLw4lqwOw2sVs7m11ca08c7",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "note",
+							"value": "اضف مرفق واضح ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/addnote/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"addnote",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "0987654321",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login Admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "0987654321",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/login1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 06:04:26 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 06:04:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Login successfully.\",\n    \"user\": {\n        \"id\": 1,\n        \"username\": \"System Admin\",\n        \"mobile\": \"0987654321\"\n    },\n    \"access_token\": \"1|rN4dguOE64W9uBazmb6tGixdjzqEidk6b5HVR3yO0c711e88\",\n    \"token_type\": \"Bearer\"\n}"
+				}
+			]
+		},
+		{
+			"name": "CreateEmployee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|sJaNNTt5PRoviftRH2STEuAaXDTWhFyie5aZ3oFua9b0c24c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"موظف جديد\",\r\n    \"mobile\": \"0944444444\",\r\n    \"responsible_party\": \"وزارة الداخلية\",\r\n    \"permissions\": [\r\n        \"Department_Complaints\",\r\n        \"Change_Status\"\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/CreateEmploye",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"CreateEmploye"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CreateEmployee",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"موظف جديد\",\r\n    \"mobile\": \"0911111111\",\r\n    \"responsible_party\": \"وزارة الداخلية\",\r\n    \"permissions\": [\r\n        \"view_department_complaints\",\r\n        \"add_complaint_note\"\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/storeEmployee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"storeEmployee"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 10:51:14 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Dec 2025 10:51:14 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"username\": \"موظف جديد\",\n    \"mobile\": \"0911111111\",\n    \"responsible_party\": \"وزارة الداخلية\",\n    \"updated_at\": \"2025-12-17T10:51:14.000000Z\",\n    \"created_at\": \"2025-12-17T10:51:14.000000Z\",\n    \"id\": 30\n}"
+				}
+			]
+		},
+		{
+			"name": "listPermissions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|6UzD4qq8vjiEoVOJxTrYEZ1DGDW6Vn4i6OUtuEXI825b45b9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/Allpermissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Allpermissions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Allpermissions",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/Allpermissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Allpermissions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:29:34 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:29:34 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 4,\n        \"name\": \"add_complaint_note\"\n    },\n    {\n        \"id\": 14,\n        \"name\": \"backup.manage\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"change_complaint_status\"\n    },\n    {\n        \"id\": 7,\n        \"name\": \"create_employee\"\n    },\n    {\n        \"id\": 9,\n        \"name\": \"delete_employee\"\n    },\n    {\n        \"id\": 10,\n        \"name\": \"employee.view_all\"\n    },\n    {\n        \"id\": 6,\n        \"name\": \"list_user_complaints\"\n    },\n    {\n        \"id\": 12,\n        \"name\": \"report.export\"\n    },\n    {\n        \"id\": 11,\n        \"name\": \"report.generate\"\n    },\n    {\n        \"id\": 5,\n        \"name\": \"request_more_info\"\n    },\n    {\n        \"id\": 13,\n        \"name\": \"system.monitor\"\n    },\n    {\n        \"id\": 8,\n        \"name\": \"update_employee\"\n    },\n    {\n        \"id\": 1,\n        \"name\": \"view_all_complaints\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"view_department_complaints\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "AllComplaints",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|tL17StqRQyxhu9kHd8MLHMnEYM95ZDfqdvvxsYl3168ec07d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/Admin/complaints",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Admin",
+						"complaints"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "All",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/Admin/complaints",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Admin",
+								"complaints"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 17:51:44 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 17:51:43 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"type\": \"new\",\n        \"location\": \"ddd\",\n        \"responsible_party\": \"وزارة الداخلية\",\n        \"description\": \"dddd\",\n        \"status\": \"new\",\n        \"citizen_id\": 1,\n        \"user_id\": null,\n        \"locked_by\": null,\n        \"locked_until\": null,\n        \"created_at\": null\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "detailsComplaints/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "11|DM2SLop7bWVOvcnwfZ2uiUZtpCLzrZa1eQzsYIYc6348ee8d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/Admin/complaints/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Admin",
+						"complaints",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "detailsComplaints/1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/Admin/complaints/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Admin",
+								"complaints",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 19:38:34 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 19:38:34 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"citizen_id\": 2,\n    \"user_id\": 26,\n    \"type\": \"ff\",\n    \"location\": \"Mazzah\",\n    \"responsible_party\": \"شرطة المرور\",\n    \"description\": \"dddd\",\n    \"status\": \"new\",\n    \"reference_number\": \"\",\n    \"locked_by\": null,\n    \"locked_until\": null,\n    \"created_at\": \"2026-01-06T07:16:21.000000Z\",\n    \"updated_at\": \"2026-01-06T07:16:21.000000Z\",\n    \"histories\": [],\n    \"attachments\": [],\n    \"citizen\": {\n        \"id\": 2,\n        \"username\": \"Ali\",\n        \"mobile\": \"0955555555\",\n        \"created_at\": null,\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    \"handler\": {\n        \"id\": 26,\n        \"username\": \"موظف 1 - شرطة المرور\",\n        \"mobile\": \"0999000025\",\n        \"responsible_party\": \"شرطة المرور\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "AllEmployees",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|6UzD4qq8vjiEoVOJxTrYEZ1DGDW6Vn4i6OUtuEXI825b45b9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/Allemployees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Allemployees"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AllEmployees",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/Allemployees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Allemployees"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:16:41 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:16:41 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"employees\": [\n        {\n            \"id\": 2,\n            \"username\": \"موظف 1 - وزارة الداخلية\",\n            \"mobile\": \"0999000001\",\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 3,\n            \"username\": \"موظف 2 - وزارة الداخلية\",\n            \"mobile\": \"0999000002\",\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 4,\n            \"username\": \"موظف 3 - وزارة الداخلية\",\n            \"mobile\": \"0999000003\",\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 5,\n            \"username\": \"موظف 1 - وزارة الصحة\",\n            \"mobile\": \"0999000004\",\n            \"responsible_party\": \"وزارة الصحة\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 6,\n            \"username\": \"موظف 2 - وزارة الصحة\",\n            \"mobile\": \"0999000005\",\n            \"responsible_party\": \"وزارة الصحة\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 7,\n            \"username\": \"موظف 3 - وزارة الصحة\",\n            \"mobile\": \"0999000006\",\n            \"responsible_party\": \"وزارة الصحة\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 8,\n            \"username\": \"موظف 1 - وزارة التربية والتعليم\",\n            \"mobile\": \"0999000007\",\n            \"responsible_party\": \"وزارة التربية والتعليم\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 9,\n            \"username\": \"موظف 2 - وزارة التربية والتعليم\",\n            \"mobile\": \"0999000008\",\n            \"responsible_party\": \"وزارة التربية والتعليم\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 10,\n            \"username\": \"موظف 3 - وزارة التربية والتعليم\",\n            \"mobile\": \"0999000009\",\n            \"responsible_party\": \"وزارة التربية والتعليم\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 11,\n            \"username\": \"موظف 1 - وزارة النقل\",\n            \"mobile\": \"0999000010\",\n            \"responsible_party\": \"وزارة النقل\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 12,\n            \"username\": \"موظف 2 - وزارة النقل\",\n            \"mobile\": \"0999000011\",\n            \"responsible_party\": \"وزارة النقل\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 13,\n            \"username\": \"موظف 3 - وزارة النقل\",\n            \"mobile\": \"0999000012\",\n            \"responsible_party\": \"وزارة النقل\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 14,\n            \"username\": \"موظف 1 - وزارة المالية\",\n            \"mobile\": \"0999000013\",\n            \"responsible_party\": \"وزارة المالية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 15,\n            \"username\": \"موظف 2 - وزارة المالية\",\n            \"mobile\": \"0999000014\",\n            \"responsible_party\": \"وزارة المالية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 16,\n            \"username\": \"موظف 3 - وزارة المالية\",\n            \"mobile\": \"0999000015\",\n            \"responsible_party\": \"وزارة المالية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 17,\n            \"username\": \"موظف 1 - البلدية\",\n            \"mobile\": \"0999000016\",\n            \"responsible_party\": \"البلدية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 18,\n            \"username\": \"موظف 2 - البلدية\",\n            \"mobile\": \"0999000017\",\n            \"responsible_party\": \"البلدية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 19,\n            \"username\": \"موظف 3 - البلدية\",\n            \"mobile\": \"0999000018\",\n            \"responsible_party\": \"البلدية\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 20,\n            \"username\": \"موظف 1 - هيئة المياه\",\n            \"mobile\": \"0999000019\",\n            \"responsible_party\": \"هيئة المياه\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 21,\n            \"username\": \"موظف 2 - هيئة المياه\",\n            \"mobile\": \"0999000020\",\n            \"responsible_party\": \"هيئة المياه\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 22,\n            \"username\": \"موظف 3 - هيئة المياه\",\n            \"mobile\": \"0999000021\",\n            \"responsible_party\": \"هيئة المياه\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 23,\n            \"username\": \"موظف 1 - هيئة الكهرباء\",\n            \"mobile\": \"0999000022\",\n            \"responsible_party\": \"هيئة الكهرباء\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 24,\n            \"username\": \"موظف 2 - هيئة الكهرباء\",\n            \"mobile\": \"0999000023\",\n            \"responsible_party\": \"هيئة الكهرباء\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 25,\n            \"username\": \"موظف 3 - هيئة الكهرباء\",\n            \"mobile\": \"0999000024\",\n            \"responsible_party\": \"هيئة الكهرباء\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 26,\n            \"username\": \"موظف 1 - شرطة المرور\",\n            \"mobile\": \"0999000025\",\n            \"responsible_party\": \"شرطة المرور\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 27,\n            \"username\": \"موظف 2 - شرطة المرور\",\n            \"mobile\": \"0999000026\",\n            \"responsible_party\": \"شرطة المرور\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 28,\n            \"username\": \"موظف 3 - شرطة المرور\",\n            \"mobile\": \"0999000027\",\n            \"responsible_party\": \"شرطة المرور\",\n            \"permissions\": []\n        },\n        {\n            \"id\": 29,\n            \"username\": \"موظف جديد\",\n            \"mobile\": \"0911111118\",\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"permissions\": [\n                \"view_department_complaints\",\n                \"add_complaint_note\"\n            ]\n        },\n        {\n            \"id\": 30,\n            \"username\": \"موظف جديد\",\n            \"mobile\": \"0911111110\",\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"permissions\": [\n                \"view_department_complaints\",\n                \"add_complaint_note\"\n            ]\n        }\n    ],\n    \"total\": 29\n}"
+				}
+			]
+		},
+		{
+			"name": "employe/id/permissions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|6UzD4qq8vjiEoVOJxTrYEZ1DGDW6Vn4i6OUtuEXI825b45b9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/employe/2/permissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employe",
+						"2",
+						"permissions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "employe/id/permissions",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/employe/30/permissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employe",
+								"30",
+								"permissions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:21:41 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 16:21:41 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"employee\": {\n        \"id\": 30,\n        \"username\": \"موظف جديد\",\n        \"mobile\": \"0911111110\",\n        \"responsible_party\": \"وزارة الداخلية\"\n    },\n    \"current_permissions\": [\n        \"view_department_complaints\",\n        \"add_complaint_note\"\n    ],\n    \"all_permissions\": [\n        \"add_complaint_note\",\n        \"backup.manage\",\n        \"change_complaint_status\",\n        \"create_employee\",\n        \"delete_employee\",\n        \"employee.view_all\",\n        \"list_user_complaints\",\n        \"report.export\",\n        \"report.generate\",\n        \"request_more_info\",\n        \"system.monitor\",\n        \"update_employee\",\n        \"view_all_complaints\",\n        \"view_department_complaints\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "UpdatePer/Emp/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|pbBDiEsWOdmU0Y5dOAWv3mIZeDrev5iBFnQFw9Zy8d40003e",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"permissions\": [\r\n        \"Department_Complaints\"\r\n        ,\"Change_Status\"\r\n       , \"Add_Note\"\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/employe/2/UpdatePer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employe",
+						"2",
+						"UpdatePer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdatePer/Emp/id",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"permissions\": [\r\n        \"Department_Complaints\"\r\n        ,\"Change_Status\"\r\n       , \"Add_Note\"\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/employe/2/UpdatePer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employe",
+								"2",
+								"UpdatePer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 21:30:50 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 21:30:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Permissions updated successfully\",\n    \"employee_id\": 2,\n    \"assigned_permissions\": [\n        \"Department_Complaints\",\n        \"Change_Status\",\n        \"Add_Note\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "notifications",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "4|TbOuV498KGB9fWBvfHFOWaCs0CzXKdZlFxNZLqXc89047d0c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "نظافة",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "حي الورود",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "تراكم قمامة منذ أسبوع",
+							"type": "text"
+						},
+						{
+							"key": "citizen_id",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/notifications",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"notifications"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "MyNotifications1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "نظافة",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "حي الورود",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "تراكم قمامة منذ أسبوع",
+									"type": "text"
+								},
+								{
+									"key": "citizen_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/notifications",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"notifications"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:00:42 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:00:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"notifications\": [\n        {\n            \"id\": 3,\n            \"type\": \"note_added\",\n            \"data\": {\n                \"title\": \"ملاحظة جديدة\",\n                \"message\": \"تم إضافة ملاحظة جديدة على شكواك رقم CMP-da7ac979-bd03-453f-a644-85a4fa577237\",\n                \"complaint_id\": 1,\n                \"reference_number\": \"CMP-da7ac979-bd03-453f-a644-85a4fa577237\",\n                \"note_preview\": \"اضف مرفق واضح\"\n            },\n            \"read\": false,\n            \"created_at\": \"2025-12-21 08:00:31\",\n            \"human_time\": \"11 seconds ago\"\n        },\n        {\n            \"id\": 2,\n            \"type\": \"status_changed\",\n            \"data\": {\n                \"title\": \"تحديث حالة الشكوى\",\n                \"message\": \"تم تغيير حالة شكواك رقم CMP-da7ac979-bd03-453f-a644-85a4fa577237 من new إلى completed\",\n                \"complaint_id\": 1,\n                \"reference_number\": \"CMP-da7ac979-bd03-453f-a644-85a4fa577237\",\n                \"old_status\": \"new\",\n                \"new_status\": \"completed\"\n            },\n            \"read\": false,\n            \"created_at\": \"2025-12-21 07:57:18\",\n            \"human_time\": \"3 minutes ago\"\n        },\n        {\n            \"id\": 1,\n            \"type\": \"complaint_created\",\n            \"data\": {\n                \"title\": \"تم استلام شكواك\",\n                \"message\": \"تم استلام شكواك رقم CMP-da7ac979-bd03-453f-a644-85a4fa577237 بنجاح\",\n                \"complaint_id\": 1,\n                \"reference_number\": \"CMP-da7ac979-bd03-453f-a644-85a4fa577237\"\n            },\n            \"read\": false,\n            \"created_at\": \"2025-12-21 07:35:46\",\n            \"human_time\": \"24 minutes ago\"\n        }\n    ],\n    \"unread_count\": 3,\n    \"total\": 3\n}"
+				}
+			]
+		},
+		{
+			"name": "markAsRead",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|hpRJwvPo4BwQfv0mgouV6IbKM1pdpGXx5r7tkP870fade7ec",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/api/notifications/1/read",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"notifications",
+						"1",
+						"read"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "markAsRead",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/notifications/1/read",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"notifications",
+								"1",
+								"read"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:14:23 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:14:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Notification marked as read\",\n    \"unread_count\": 2\n}"
+				}
+			]
+		},
+		{
+			"name": "fcm_token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|hpRJwvPo4BwQfv0mgouV6IbKM1pdpGXx5r7tkP870fade7ec",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fcm_token",
+							"value": "0000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/fcm-token",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"fcm-token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "fcm_token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fcm_token",
+									"value": "0000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/fcm-token",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"fcm-token"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:22:05 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Dec 2025 08:22:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"FCM token updated successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AdminStatistics",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "10|XNG2kBC1Xablc9be3S4oYKZiiI4m5Bs8eBAfkPTxc4d38f3b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/statistics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"statistics"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "statistics",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/statistics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"statistics"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 15:39:10 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 15:39:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"total Complaints\": 5,\n    \"by_status\": [\n        {\n            \"status\": \"new\",\n            \"total\": 2\n        },\n        {\n            \"status\": \"in_progress\",\n            \"total\": 1\n        },\n        {\n            \"status\": \"completed\",\n            \"total\": 1\n        },\n        {\n            \"status\": \"rejected\",\n            \"total\": 1\n        }\n    ],\n    \"by_department\": [\n        {\n            \"responsible_party\": \"وزارة الداخلية\",\n            \"total\": 1\n        },\n        {\n            \"responsible_party\": \"وزارة الصحة\",\n            \"total\": 1\n        },\n        {\n            \"responsible_party\": \"البلدية\",\n            \"total\": 1\n        },\n        {\n            \"responsible_party\": \"شرطة المرور\",\n            \"total\": 2\n        }\n    ],\n    \"today\": 3,\n    \"this_week\": 3,\n    \"most_busy_department\": {\n        \"responsible_party\": \"شرطة المرور\",\n        \"total\": 2\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "AdminExport/csv",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "10|XNG2kBC1Xablc9be3S4oYKZiiI4m5Bs8eBAfkPTxc4d38f3b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/csv",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/reports/complaints/export/csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"reports",
+						"complaints",
+						"export",
+						"csv"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "export/csv",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/csv",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/reports/complaints/export/csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"reports",
+								"complaints",
+								"export",
+								"csv"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 15:50:57 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 06 Jan 2026 15:50:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/csv; charset=UTF-8"
+						},
+						{
+							"key": "Content-Disposition",
+							"value": "attachment; filename=complaints.csv"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "ID,Status,Department,\"Created At\"\n1,new,\"شرطة المرور\",\"2026-01-06 07:16:21\"\n2,new,\"شرطة المرور\",\"2026-01-06 07:16:21\"\n3,in_progress,\"وزارة الداخلية\",\n4,completed,\"وزارة الصحة\",\"2026-01-06 07:16:21\"\n5,rejected,البلدية,\n"
+				}
+			]
+		},
+		{
+			"name": "AdminExport/pdf",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|sJaNNTt5PRoviftRH2STEuAaXDTWhFyie5aZ3oFua9b0c24c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/reports/complaints/export/pdf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"reports",
+						"complaints",
+						"export",
+						"pdf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mycomplaintsnotes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "16|VQy6LlCrtjhf5JSnasCHmDgbUaXK7rc2NNZkd80vb545346e",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/complaints/9/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"complaints",
+						"9",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminTrace",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|sJaNNTt5PRoviftRH2STEuAaXDTWhFyie5aZ3oFua9b0c24c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "نظافة55",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "همك55",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "تراكم قمامة منذ أسبوع555",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "citizen_id",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "responsible_party",
+							"value": "شرطة المرور",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/traces",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"traces"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AdminTrace",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "نظافة55",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "همك55",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "تراكم قمامة منذ أسبوع555",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "citizen_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "responsible_party",
+									"value": "شرطة المرور",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/traces",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"traces"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 08 Jan 2026 11:22:06 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 08 Jan 2026 11:22:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"current_page\": 1,\n    \"data\": [\n        {\n            \"id\": 34,\n            \"trace_id\": \"d6ac290c-f1ac-4fb1-950c-d831c01e768c\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"GET\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/traces\\\",\\\"status_code\\\":401,\\\"duration\\\":0.206,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T11:21:44.000000Z\",\n            \"updated_at\": \"2026-01-08T11:21:44.000000Z\"\n        },\n        {\n            \"id\": 33,\n            \"trace_id\": \"83b71682-ceeb-4da0-8749-1b8563f2696b\",\n            \"user_id\": 8,\n            \"user_role\": \"citizen\",\n            \"action\": \"complaint_create\",\n            \"entity\": \"complaint\",\n            \"entity_id\": 1,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/complaints\\\",\\\"status_code\\\":201,\\\"duration\\\":0.482,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T11:04:10.000000Z\",\n            \"updated_at\": \"2026-01-08T11:04:10.000000Z\"\n        },\n        {\n            \"id\": 32,\n            \"trace_id\": \"5b109686-f599-4008-beba-454f25663022\",\n            \"user_id\": 8,\n            \"user_role\": \"citizen\",\n            \"action\": \"auth_login\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 8,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/login\\\",\\\"status_code\\\":200,\\\"duration\\\":0.337,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T11:03:03.000000Z\",\n            \"updated_at\": \"2026-01-08T11:03:03.000000Z\"\n        },\n        {\n            \"id\": 31,\n            \"trace_id\": \"4de1c59b-5115-4906-b38a-67eeae50ba6a\",\n            \"user_id\": 8,\n            \"user_role\": \"citizen\",\n            \"action\": \"auth_login\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 8,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/login\\\",\\\"status_code\\\":401,\\\"duration\\\":0.325,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T11:02:44.000000Z\",\n            \"updated_at\": \"2026-01-08T11:02:44.000000Z\"\n        },\n        {\n            \"id\": 30,\n            \"trace_id\": \"8302bb40-f087-4e3f-b996-db2e825799e5\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_verify\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/verify\\\",\\\"status_code\\\":200,\\\"duration\\\":0.16,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T11:02:06.000000Z\",\n            \"updated_at\": \"2026-01-08T11:02:06.000000Z\"\n        },\n        {\n            \"id\": 29,\n            \"trace_id\": \"708d9e81-e6d8-4faf-8432-bd61130c64a1\",\n            \"user_id\": 8,\n            \"user_role\": \"citizen\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 8,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":201,\\\"duration\\\":2.009,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T11:01:22.000000Z\",\n            \"updated_at\": \"2026-01-08T11:01:22.000000Z\"\n        },\n        {\n            \"id\": 28,\n            \"trace_id\": \"0890d018-c96c-490c-8bb5-2e33f967d7b0\",\n            \"user_id\": 1,\n            \"user_role\": \"admin\",\n            \"action\": \"admin_createEmployee\",\n            \"entity\": \"user\",\n            \"entity_id\": 29,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/CreateEmploye\\\",\\\"status_code\\\":201,\\\"duration\\\":0.818,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T10:31:52.000000Z\",\n            \"updated_at\": \"2026-01-08T10:31:52.000000Z\"\n        },\n        {\n            \"id\": 27,\n            \"trace_id\": \"a8f260a3-7d43-4418-98ba-b5ffc38ab4cc\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"admin_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 1,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/login1\\\",\\\"status_code\\\":200,\\\"duration\\\":0.633,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T10:31:38.000000Z\",\n            \"updated_at\": \"2026-01-08T10:31:38.000000Z\"\n        },\n        {\n            \"id\": 26,\n            \"trace_id\": \"e09e2b45-6281-4044-a9b4-aa3ae2625817\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"admin_createEmployee\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/CreateEmploye\\\",\\\"status_code\\\":401,\\\"duration\\\":0.103,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T10:31:13.000000Z\",\n            \"updated_at\": \"2026-01-08T10:31:13.000000Z\"\n        },\n        {\n            \"id\": 25,\n            \"trace_id\": \"33e6c7f7-915c-430b-a561-37c52d20a34e\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"admin_createEmployee\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/CreateEmploye\\\",\\\"status_code\\\":401,\\\"duration\\\":0.244,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T10:04:31.000000Z\",\n            \"updated_at\": \"2026-01-08T10:04:31.000000Z\"\n        },\n        {\n            \"id\": 24,\n            \"trace_id\": \"f75941bc-36f9-4d7d-ba5b-637b66aad18c\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"admin_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 1,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/login1\\\",\\\"status_code\\\":200,\\\"duration\\\":2.056,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T10:04:18.000000Z\",\n            \"updated_at\": \"2026-01-08T10:04:18.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"trace_id\": \"6e491f93-a256-4d4b-8647-94808d9728df\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":2.757,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T10:04:04.000000Z\",\n            \"updated_at\": \"2026-01-08T10:04:04.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"trace_id\": \"88bc2a93-1c7b-483b-a79c-da019c622014\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"complaint_department\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"GET\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/departmentComplaints\\\",\\\"status_code\\\":401,\\\"duration\\\":0.203,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T09:51:47.000000Z\",\n            \"updated_at\": \"2026-01-08T09:51:47.000000Z\"\n        },\n        {\n            \"id\": 21,\n            \"trace_id\": \"144b4e8f-0f28-46b0-9dbf-265a2aae11d1\",\n            \"user_id\": 3,\n            \"user_role\": \"employee\",\n            \"action\": \"employee_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 3,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":403,\\\"duration\\\":0.491,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T09:51:28.000000Z\",\n            \"updated_at\": \"2026-01-08T09:51:28.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"trace_id\": \"6e9637fe-e09b-4637-8feb-9774479e04cb\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"employee_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 2,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":200,\\\"duration\\\":0.911,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T09:50:55.000000Z\",\n            \"updated_at\": \"2026-01-08T09:50:55.000000Z\"\n        },\n        {\n            \"id\": 19,\n            \"trace_id\": \"b6add987-d8ef-46cb-a129-b49736ed94a6\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 7,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.354,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:53:57.000000Z\",\n            \"updated_at\": \"2026-01-08T07:53:57.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"trace_id\": \"c59ec038-bc36-4b43-8257-9f67c7567309\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 6,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.589,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:52:42.000000Z\",\n            \"updated_at\": \"2026-01-08T07:52:42.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"trace_id\": \"38cd1438-a306-4dfa-931d-ab1ab36a3870\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 5,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.919,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:44:57.000000Z\",\n            \"updated_at\": \"2026-01-08T07:44:57.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"trace_id\": \"bcfd00b5-889b-4562-82fe-02885e3f0742\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":0.364,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:44:48.000000Z\",\n            \"updated_at\": \"2026-01-08T07:44:48.000000Z\"\n        },\n        {\n            \"id\": 15,\n            \"trace_id\": \"282f2181-b652-48aa-be20-2abb83c2ebaa\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 4,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.769,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:39:39.000000Z\",\n            \"updated_at\": \"2026-01-08T07:39:39.000000Z\"\n        },\n        {\n            \"id\": 14,\n            \"trace_id\": \"b2673a14-8975-4e68-b954-b6a50a1539d6\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":0.071,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:39:30.000000Z\",\n            \"updated_at\": \"2026-01-08T07:39:30.000000Z\"\n        },\n        {\n            \"id\": 13,\n            \"trace_id\": \"bfb67763-8fd0-4a78-84b3-88ebd5a4491f\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 3,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.66,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:38:44.000000Z\",\n            \"updated_at\": \"2026-01-08T07:38:44.000000Z\"\n        },\n        {\n            \"id\": 12,\n            \"trace_id\": \"59721523-77de-4023-aaa4-8bfc74cfaec7\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":0.063,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:38:19.000000Z\",\n            \"updated_at\": \"2026-01-08T07:38:19.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"trace_id\": \"afd24290-1a6b-4042-884e-9c8f51157afa\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 2,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":1.824,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:37:34.000000Z\",\n            \"updated_at\": \"2026-01-08T07:37:34.000000Z\"\n        },\n        {\n            \"id\": 10,\n            \"trace_id\": \"5a4f2db3-5c60-428e-b2a3-2e7465f36e8f\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":0.151,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:36:53.000000Z\",\n            \"updated_at\": \"2026-01-08T07:36:53.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"trace_id\": \"3e5a7d50-b5e2-436b-962f-554533b22ce0\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":422,\\\"duration\\\":2.672,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:16:24.000000Z\",\n            \"updated_at\": \"2026-01-08T07:16:24.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"trace_id\": \"d481792f-e9cc-4aa2-9a7f-bab91377a28f\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"auth_register\",\n            \"entity\": \"citizen\",\n            \"entity_id\": 1,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/register\\\",\\\"status_code\\\":500,\\\"duration\\\":0.991,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:13:04.000000Z\",\n            \"updated_at\": \"2026-01-08T07:13:04.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"trace_id\": \"b53cd2d3-de5d-4b22-8a9a-4331b9509128\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"complaint_addNote\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/addnote\\\\/1\\\",\\\"status_code\\\":500,\\\"duration\\\":0.096,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:11:55.000000Z\",\n            \"updated_at\": \"2026-01-08T07:11:55.000000Z\"\n        },\n        {\n            \"id\": 6,\n            \"trace_id\": \"75fd3965-5e6f-43a2-9d78-427f717de78e\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"complaint_addNote\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/addnote\\\\/1\\\",\\\"status_code\\\":500,\\\"duration\\\":0.136,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:10:25.000000Z\",\n            \"updated_at\": \"2026-01-08T07:10:25.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"trace_id\": \"91e68e11-214e-4273-9050-0069fc3df805\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"employee_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 2,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":200,\\\"duration\\\":0.635,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T07:10:03.000000Z\",\n            \"updated_at\": \"2026-01-08T07:10:03.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"trace_id\": \"875fa5a1-848b-49a7-93ba-4f3ebdd9f5cf\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"employee_login\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":422,\\\"duration\\\":0.694,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:09:55.000000Z\",\n            \"updated_at\": \"2026-01-08T07:09:55.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"trace_id\": \"cc81bf8d-bb9b-4ebd-9ba7-978f30c993e6\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"employee_changePassword\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/change-password\\\",\\\"status_code\\\":200,\\\"duration\\\":0.732,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"success\",\n            \"created_at\": \"2026-01-08T07:09:48.000000Z\",\n            \"updated_at\": \"2026-01-08T07:09:48.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"trace_id\": \"bf1537b1-fe40-47b4-8777-bbf33e094c01\",\n            \"user_id\": 2,\n            \"user_role\": \"employee\",\n            \"action\": \"employee_login\",\n            \"entity\": \"user\",\n            \"entity_id\": 2,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":403,\\\"duration\\\":0.67,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:09:32.000000Z\",\n            \"updated_at\": \"2026-01-08T07:09:32.000000Z\"\n        },\n        {\n            \"id\": 1,\n            \"trace_id\": \"bea7159b-cd42-4dbc-b76d-ac330df091b5\",\n            \"user_id\": null,\n            \"user_role\": \"guest\",\n            \"action\": \"employee_login\",\n            \"entity\": null,\n            \"entity_id\": null,\n            \"context\": \"{\\\"method\\\":\\\"POST\\\",\\\"ip\\\":\\\"127.0.0.1\\\",\\\"url\\\":\\\"http:\\\\/\\\\/localhost:8000\\\\/api\\\\/employee\\\\/login\\\",\\\"status_code\\\":422,\\\"duration\\\":0.882,\\\"exception\\\":null,\\\"error_message\\\":null}\",\n            \"duration_ms\": null,\n            \"status\": \"error\",\n            \"created_at\": \"2026-01-08T07:09:22.000000Z\",\n            \"updated_at\": \"2026-01-08T07:09:22.000000Z\"\n        }\n    ],\n    \"first_page_url\": \"http://localhost:8000/api/traces?page=1\",\n    \"from\": 1,\n    \"last_page\": 1,\n    \"last_page_url\": \"http://localhost:8000/api/traces?page=1\",\n    \"links\": [\n        {\n            \"url\": null,\n            \"label\": \"&laquo; Previous\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://localhost:8000/api/traces?page=1\",\n            \"label\": \"1\",\n            \"active\": true\n        },\n        {\n            \"url\": null,\n            \"label\": \"Next &raquo;\",\n            \"active\": false\n        }\n    ],\n    \"next_page_url\": null,\n    \"path\": \"http://localhost:8000/api/traces\",\n    \"per_page\": 50,\n    \"prev_page_url\": null,\n    \"to\": 34,\n    \"total\": 34\n}"
+				}
+			]
+		}
+	]
+}
